@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeMatch Setup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div id="navbar-slot"></div>
+
+<div class="form-container">
+
+    <h2>HomeMatch Setup</h2>
+    <p class="step-progress-label" id="stepProgressLabel">Step 1 of 3 — Personal Information</p>
+
+    <!-- STEP BAR -->
+    <div class="step-bar">
+        <div class="step active" data-step="0" onclick="goStep(0)">
+            <div class="step-circle"><span class="step-number">1</span><span class="step-check">✓</span></div>
+            <span class="step-label">Personal</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" data-step="1" onclick="goStep(1)">
+            <div class="step-circle"><span class="step-number">2</span><span class="step-check">✓</span></div>
+            <span class="step-label">Financial</span>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" data-step="2" onclick="goStep(2)">
+            <div class="step-circle"><span class="step-number">3</span><span class="step-check">✓</span></div>
+            <span class="step-label">Preferences</span>
+        </div>
+    </div>
+
+    <!-- ELIGIBILITY BANNER (updated dynamically) -->
+    <div id="eligibilityBanner" class="eligibility-banner"></div>
+
+
+    <!-- ======================================================
+         STEP 1 — Personal Information
+         ====================================================== -->
+    <div class="form-step active">
+
+        <h3>Personal Information</h3>
+
+        <label>Marital Status</label>
+        <label><input type="radio" name="marital" value="single" onchange="handleMarital()"> Single</label>
+        <label><input type="radio" name="marital" value="married" onchange="handleMarital()"> Married</label>
+        <p class="field-error" id="error-marital"></p>
+
+        <div id="singleAge" class="hidden">
+            <label>Are you above 35?</label>
+            <label><input type="radio" name="above35" value="yes" onchange="handleMarital()"> Yes</label>
+            <label><input type="radio" name="above35" value="no" onchange="handleMarital()"> No</label>
+            <p class="field-error" id="error-above35"></p>
+        </div>
+
+        <label>Citizenship</label>
+        <select id="citizenship" onchange="handleMarital()">
+            <option value="citizen">Singapore Citizen</option>
+            <option value="pr">Permanent Resident (PR)</option>
+            <option value="foreigner">Foreigner</option>
+        </select>
+
+        <div id="partnerCitizenDiv" class="hidden">
+            <label>Partner's Citizenship</label>
+            <select id="partnerCitizenship" onchange="handleMarital()">
+                <option value="citizen">Singapore Citizen</option>
+                <option value="pr">Permanent Resident (PR)</option>
+                <option value="foreigner">Foreigner</option>
+            </select>
+        </div>
+
+        <label>Household Status</label>
+        <select id="householdStatus">
+            <option value="first">First Timer</option>
+            <option value="second">Second Timer</option>
+        </select>
+
+        <label>Employment Status</label>
+        <select id="employmentStatus">
+            <option value="employed">Employed</option>
+            <option value="self_employed">Self-Employed</option>
+            <option value="unemployed">Unemployed</option>
+        </select>
+
+        <label>Average Household Monthly Income (SGD)</label>
+        <input type="number" id="income" placeholder="e.g. 5000" min="0" oninput="handleIncomeChange()">
+        <p class="field-error" id="error-income"></p>
+
+        <label>Flat Type Preference</label>
+        <select id="flatType" onchange="handleFlatTypeChange()">
+            <option value="2-room">2-room Flexi</option>
+            <option value="3-room">3-room</option>
+            <option value="4-room" selected>4-room</option>
+            <option value="5-room">5-room</option>
+            <option value="executive">Executive</option>
+        </select>
+
+        <div class="form-nav">
+            <button onclick="nextStep()">Continue →</button>
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+         STEP 2 — Financial Information
+         ====================================================== -->
+    <div class="form-step">
+
+        <h3>Financial Information</h3>
+
+        <label>Purchase Type</label>
+        <label>
+            <input type="radio" name="purchaseType" value="bto" onchange="handlePurchaseTypeChange()">
+            BTO (Build-To-Order) — estimated 3–5 year wait, lower price
+        </label>
+        <label>
+            <input type="radio" name="purchaseType" value="resale" onchange="handlePurchaseTypeChange()">
+            Resale — move in within months, market price
+        </label>
+        <p class="field-error" id="error-purchaseType"></p>
+
+        <label>Housing Budget — Maximum Price (SGD)</label>
+        <input type="number" id="budget" placeholder="e.g. 500000" min="0" oninput="updateFinancialSummary()">
+        <p class="field-error" id="error-budget"></p>
+
+        <label>Loan Type</label>
+        <select id="loanType" onchange="updateFinancialSummary()">
+            <option value="hdb">HDB Loan (2.6% p.a., up to 80% LTV)</option>
+            <option value="bank">Bank Loan (~3.5% p.a., up to 75% LTV)</option>
+        </select>
+
+        <label>Do you want to live near your parents?</label>
+        <label><input type="radio" name="nearParents" value="yes" onchange="handleNearParents()"> Yes</label>
+        <label><input type="radio" name="nearParents" value="no" onchange="handleNearParents()"> No</label>
+        <p class="field-error" id="error-nearParents"></p>
+
+        <div id="parentsTownDiv" class="hidden">
+            <label>Parents' Town / Estate</label>
+            <select id="parentsTown">
+                <option value="">Select town…</option>
+            </select>
+        </div>
+
+        <label>Workplace Location (MRT Station or Area)</label>
+        <input type="text" id="workplaceMRT" placeholder="e.g. Raffles Place, Jurong East MRT">
+
+        <hr>
+
+        <h4>Estimated Financial Plan</h4>
+        <p class="summary-rate" id="summaryRate">Enter your budget above to see estimates</p>
+
+        <div class="financial-summary" id="financialSummary">
+
+            <div class="summary-row">
+                <span>Total Downpayment</span>
+                <strong id="calc-downpayment">—</strong>
+            </div>
+            <div class="summary-row summary-row-sub" id="cashRow">
+                <span>↳ Min. Cash Required</span>
+                <strong id="calc-cash">—</strong>
+            </div>
+            <div class="summary-row summary-row-sub">
+                <span>↳ Can Use CPF</span>
+                <strong id="calc-cpf">—</strong>
+            </div>
+            <div class="summary-row">
+                <span>Loan Amount</span>
+                <strong id="calc-loan">—</strong>
+            </div>
+            <div class="summary-row">
+                <span>Est. Monthly Mortgage</span>
+                <strong id="calc-mortgage">—</strong>
+            </div>
+
+            <div class="msr-warning-row" id="msrWarningRow">
+                ⚠️ Monthly mortgage exceeds 30% of income (MSR limit). Consider a higher income or lower budget.
+            </div>
+
+            <hr style="margin:14px 0 10px;">
+            <h4 style="font-size:13px; margin:0 0 10px;">Estimated HDB Grants</h4>
+            <div id="grantsDisplay">
+                <p class="no-grants-msg">Complete Step 1 to see grant eligibility</p>
+            </div>
+
+            <div class="summary-row summary-effective">
+                <span>Effective Price (after grants)</span>
+                <strong id="calc-effective">—</strong>
+            </div>
+
+        </div>
+
+        <div class="form-nav">
+            <button class="back-btn" onclick="prevStep()">← Back</button>
+            <button onclick="nextStep()">Continue →</button>
+        </div>
+
+    </div>
+
+
+    <!-- ======================================================
+         STEP 3 — Location Preferences
+         ====================================================== -->
+    <div class="form-step">
+
+        <h3>Location Preferences</h3>
+
+        <p class="pref-hint">
+            Drag to reorder — or use ↑ ↓ buttons to rank what matters most
+        </p>
+
+        <ul id="preferenceList">
+
+            <li class="pref-item" data-factor="mrt" data-label="MRT Accessibility">
+                <span class="rank"></span>
+                <span class="drag">☰</span>
+                <span class="icon">🚆</span>
+                <span class="pref-label">MRT Accessibility</span>
+                <div class="pref-move-btns">
+                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
+                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
+                </div>
+            </li>
+
+            <li class="pref-item" data-factor="commute" data-label="Commute to Workplace">
+                <span class="rank"></span>
+                <span class="drag">☰</span>
+                <span class="icon">💼</span>
+                <span class="pref-label">Commute to Workplace</span>
+                <div class="pref-move-btns">
+                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
+                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
+                </div>
+            </li>
+
+            <li class="pref-item" data-factor="schools" data-label="Schools Nearby">
+                <span class="rank"></span>
+                <span class="drag">☰</span>
+                <span class="icon">🏫</span>
+                <span class="pref-label">Schools Nearby</span>
+                <div class="pref-move-btns">
+                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
+                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
+                </div>
+            </li>
+
+            <li class="pref-item" data-factor="parks" data-label="Parks &amp; Recreation">
+                <span class="rank"></span>
+                <span class="drag">☰</span>
+                <span class="icon">🌳</span>
+                <span class="pref-label">Parks &amp; Recreation</span>
+                <div class="pref-move-btns">
+                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
+                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
+                </div>
+            </li>
+
+            <li class="pref-item" data-factor="malls" data-label="Shopping Malls">
+                <span class="rank"></span>
+                <span class="drag">☰</span>
+                <span class="icon">🛍️</span>
+                <span class="pref-label">Shopping Malls</span>
+                <div class="pref-move-btns">
+                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
+                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
+                </div>
+            </li>
+
+            <li class="pref-item" data-factor="supermarkets" data-label="Supermarkets">
+                <span class="rank"></span>
+                <span class="drag">☰</span>
+                <span class="icon">🛒</span>
+                <span class="pref-label">Supermarkets</span>
+                <div class="pref-move-btns">
+                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
+                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
+                </div>
+            </li>
+
+            <li class="pref-item" data-factor="community" data-label="Community Clubs / Sports Centres">
+                <span class="rank"></span>
+                <span class="drag">☰</span>
+                <span class="icon">🏟️</span>
+                <span class="pref-label">Community Clubs / Sports Centres</span>
+                <div class="pref-move-btns">
+                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
+                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
+                </div>
+            </li>
+
+            <li class="pref-item" data-factor="parents" data-label="Near Parents">
+                <span class="rank"></span>
+                <span class="drag">☰</span>
+                <span class="icon">👨‍👩‍👧</span>
+                <span class="pref-label">Near Parents</span>
+                <div class="pref-move-btns">
+                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
+                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
+                </div>
+            </li>
+
+        </ul>
+
+        <div class="form-nav">
+            <button class="back-btn" onclick="prevStep()">← Back</button>
+            <button onclick="submitForm()">See Results →</button>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script src="js/hdb.js"></script>
+<script src="js/input.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeMatch Results</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+</head>
+
+<body>
+
+<div id="navbar-slot"></div>
+
+<div class="results-container">
+
+    <h2>Recommended Locations</h2>
+
+    <!-- LOADING STATE -->
+    <div id="loadingState" class="loading-state" style="display: flex;">
+        <div class="spinner"></div>
+        <p>Finding the best locations for you…</p>
+    </div>
+
+    <!-- ERROR STATE -->
+    <div id="errorState" class="error-state">
+        <div class="error-icon">⚠️</div>
+        <p class="error-message">Something went wrong.</p>
+        <button class="retry-btn" id="retryBtn">Try Again</button>
+    </div>
+
+    <!-- RESULTS CONTENT -->
+    <div id="resultsContent" style="display: none;">
+
+        <!-- Grant Banner (populated by JS) -->
+        <div id="grantBanner" class="grant-banner" style="display: none;">
+            <div class="grant-banner-icon">💰</div>
+            <div>
+                <div class="grant-banner-title" id="grantBannerTitle"></div>
+                <div class="grant-banner-sub" id="grantBannerSub"></div>
+            </div>
+        </div>
+
+        <!-- Filter Panel -->
+        <div class="filter-panel">
+
+            <div class="filter-group">
+                <label>Sort By</label>
+                <select id="sortResults">
+                    <option value="match">Best Match</option>
+                    <option value="price">Lowest Price</option>
+                    <option value="distance">Closest MRT</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label>Flat Type</label>
+                <select id="filterFlatType">
+                    <option value="">All Types</option>
+                    <option value="2-room">2-room Flexi</option>
+                    <option value="3-room">3-room</option>
+                    <option value="4-room">4-room</option>
+                    <option value="5-room">5-room</option>
+                </select>
+            </div>
+
+            <div class="filter-group filter-price-group">
+                <label>Max Price (after grants)</label>
+                <div class="filter-price-row">
+                    <input type="range" id="filterPrice" min="200000" max="1200000" step="10000" value="1200000">
+                    <span class="filter-price-val" id="filterPriceDisplay">Any</span>
+                </div>
+            </div>
+
+            <div class="filter-count" id="filterCount"></div>
+
+        </div>
+
+
+        <!-- Results Layout -->
+        <div class="results-layout">
+            <div class="results-list" id="resultsList"></div>
+            <div id="map"></div>
+        </div>
+
+
+        <!-- Footer: Data Source + Disclaimer -->
+        <div class="results-footer">
+            <p class="data-source">
+                📊 Resale prices based on HDB transaction data (Q1 2025) · BTO prices are estimates from recent launches
+            </p>
+            <p class="disclaimer">
+                ⚠️ This tool provides indicative estimates only. Grant eligibility, prices, and loan terms are subject to
+                HDB's official assessment. Please verify your eligibility and all figures directly with HDB at
+                <strong>hdb.gov.sg</strong> before making any financial decisions.
+            </p>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="js/app.js"></script>
+<script src="js/hdb.js"></script>
+<script src="js/results.js"></script>
+
+</body>
+</html>
