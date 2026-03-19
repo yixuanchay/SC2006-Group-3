@@ -132,7 +132,6 @@ async function handleRegister() {
     const name        = document.getElementById('regName')?.value.trim();
     const email       = document.getElementById('regEmail')?.value.trim();
     const password    = document.getElementById('regPassword')?.value;
-    const citizenship = document.getElementById('regCitizenship')?.value;
 
     if (!email || !password) {
         showAuthError('registerError', 'Email and password are required.');
@@ -147,7 +146,7 @@ async function handleRegister() {
         const res = await fetch(`${window.HM_API}/api/auth/register`, {
             method:  'POST',
             headers: { 'Content-Type': 'application/json' },
-            body:    JSON.stringify({ name, email, password, citizenship })
+            body:    JSON.stringify({ name, email, password })
         });
         const data = await res.json();
         if (!res.ok) { showAuthError('registerError', data.error || 'Registration failed.'); return; }
@@ -195,16 +194,21 @@ function refreshNavbar() {
 
     const navHTML = `
         <nav class="navbar">
-            <div class="logo" onclick="goHome()" style="cursor:pointer;">HomeMatch</div>
-            <div class="navbar-links">
-                <a class="navbar-link" href="index.html#how-it-works">How It Works</a>
+            <div class="logo" onclick="goHome()" style="cursor:pointer;">
+                <img src="images/logo-homematch.png" alt="HomeMatch" class="logo-img" style="height:56px;width:56px;object-fit:contain;">
+            </div>
+            <div class="navbar-center">
+                <a class="navbar-link" href="index.html">Home</a>
+                <a class="navbar-link" href="index.html#how-it-works">How it Works</a>
                 <a class="navbar-link" href="index.html#features">Features</a>
+            </div>
+            <div class="navbar-actions">
                 ${loggedIn ? `
                     <a class="navbar-link" href="dashboard.html">Dashboard</a>
-                    <button class="home-btn" onclick="handleLogout()">Log Out</button>
+                    <button class="nav-btn nav-btn-logout" onclick="handleLogout()">Log Out</button>
                 ` : `
-                    <button class="home-btn home-btn-ghost" onclick="openModal('login')">Log In</button>
-                    <button class="home-btn" onclick="openModal('register')">Sign Up</button>
+                    <button class="nav-btn nav-btn-signup" onclick="openModal('register')">Sign Up</button>
+                    <button class="nav-btn nav-btn-login" onclick="openModal('login')">Log In</button>
                 `}
             </div>
         </nav>`;

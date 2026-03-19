@@ -1,0 +1,793 @@
+/* ============================================================
+   Landing Page — Color Palette & Fonts
+   ============================================================ */
+
+:root {
+    --lp-dark-brown:  #B39E8F;
+    --lp-light-brown: #EAD5C1;
+    --lp-light-blue:  #A0B6D0;
+    --lp-dark-blue:   #203250;
+    --lp-light-green: #C2C7B8;
+    --lp-dark-green:  #A8B4A2;
+}
+
+/* Override body for landing */
+body {
+    font-family: 'DM Sans', 'Inter', sans-serif;
+    background: #fff;
+}
+
+
+/* ============================================================
+   Navbar overrides
+   ============================================================ */
+
+.navbar {
+    max-height: none;
+    overflow: visible;
+    padding: 12px 48px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.logo img,
+.logo-img {
+    height: 56px !important;
+    width: 56px !important;
+    max-height: 56px !important;
+    max-width: 56px !important;
+}
+
+.navbar-link {
+    font-family: 'DM Sans', sans-serif;
+    color: var(--lp-dark-blue);
+    font-weight: 500;
+}
+
+.nav-btn-signup {
+    background: var(--lp-dark-brown);
+    border-radius: 20px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.nav-btn-signup:hover {
+    background: #9e8a7b;
+}
+
+.nav-btn-login {
+    background: var(--lp-dark-blue);
+    border-radius: 20px;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.nav-btn-login:hover {
+    background: #2d4368;
+}
+
+
+/* ============================================================
+   Hero
+   ============================================================ */
+
+.lp-hero {
+    padding: 48px 24px 32px;
+    background: #fff;
+    text-align: center;
+    min-height: auto;
+}
+
+.lp-hero-inner {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.lp-hero-title {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: clamp(2.4rem, 5.5vw, 4rem);
+    font-weight: 400;
+    color: var(--lp-dark-blue);
+    margin: 0 0 40px;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+}
+
+.lp-laptop-mockup {
+    max-width: 700px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.lp-laptop-screen {
+    background: #e8e8e8;
+    border-radius: 8px 8px 0 0;
+    padding: 4px 4px 0;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+    overflow: hidden;
+}
+
+.lp-laptop-screen img {
+    border-radius: 4px 4px 0 0;
+}
+
+.lp-laptop-base {
+    height: 16px;
+    background: linear-gradient(to bottom, var(--lp-dark-brown), #a08e7f);
+    border-radius: 0 0 8px 8px;
+    margin: 0 -1%;
+}
+
+
+/* ============================================================
+   Trusted By
+   ============================================================ */
+
+.lp-trusted {
+    padding: 32px 24px;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.lp-trusted .lp-container {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    max-width: 1000px;
+}
+
+.lp-trusted-label {
+    font-family: 'Crimson Text', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: #888;
+    flex-shrink: 0;
+}
+
+.lp-trusted-logos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    gap: 24px;
+}
+
+.lp-trusted-logos img {
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.lp-trusted-logos img:hover {
+    opacity: 1;
+}
+
+
+/* ============================================================
+   Benefits
+   ============================================================ */
+
+.lp-benefits {
+    padding: 80px 24px;
+    background: #fafafa;
+}
+
+.lp-benefits-header {
+    margin-bottom: 48px;
+}
+
+.lp-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--lp-dark-brown);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.lp-benefits-header h2 {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 400;
+    color: var(--lp-dark-blue);
+    margin: 0 0 12px;
+    line-height: 1.2;
+}
+
+.lp-benefits-header p {
+    font-size: 1rem;
+    color: #888;
+    max-width: 480px;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.lp-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.lp-benefit-card {
+    padding: 24px 20px;
+    border-top: 2px solid var(--lp-dark-brown);
+}
+
+.lp-benefit-icon {
+    margin-bottom: 16px;
+}
+
+.lp-benefit-card h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--lp-dark-blue);
+    margin: 0 0 10px;
+}
+
+.lp-benefit-card p {
+    font-size: 0.88rem;
+    color: #666;
+    line-height: 1.65;
+    margin: 0;
+}
+
+
+/* ============================================================
+   HDB Image Showcase
+   ============================================================ */
+
+.lp-showcase {
+    padding: 0;
+}
+
+.lp-showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 400px;
+}
+
+.lp-showcase-block {
+    background: var(--lp-light-brown);
+}
+
+.lp-showcase-img {
+    overflow: hidden;
+    background: var(--lp-light-green);
+}
+
+.lp-showcase-img img {
+    display: block;
+}
+
+
+/* ============================================================
+   Find the Right BTO
+   ============================================================ */
+
+.lp-find-bto {
+    padding: 80px 24px;
+    background: #fff;
+}
+
+.lp-find-bto-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+}
+
+.lp-find-bto-text h2 {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 400;
+    color: var(--lp-dark-blue);
+    margin: 0 0 16px;
+    line-height: 1.2;
+}
+
+.lp-find-bto-text > p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.7;
+    margin: 0 0 32px;
+}
+
+.lp-find-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 32px;
+}
+
+.lp-find-step {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-top: 1px solid #e5e5e5;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.lp-find-step:last-child {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.lp-find-num {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #aaa;
+    flex-shrink: 0;
+    padding-top: 2px;
+}
+
+.lp-find-step strong {
+    color: var(--lp-dark-blue);
+}
+
+.lp-find-bto-img {
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 400px;
+    background: var(--lp-light-blue);
+}
+
+.lp-btn-dark {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--lp-dark-blue);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.lp-btn-dark:hover {
+    background: #2d4368;
+}
+
+
+/* ============================================================
+   Plan Your BTO Journey
+   ============================================================ */
+
+.lp-journey {
+    padding: 80px 24px;
+    background: #fafafa;
+}
+
+.lp-journey-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+}
+
+.lp-journey-header h2 {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 400;
+    color: var(--lp-dark-blue);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.lp-journey-steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+}
+
+.lp-journey-step {
+    padding: 32px 24px;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.lp-journey-num {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--lp-dark-brown);
+    display: block;
+    margin-bottom: 16px;
+    line-height: 1;
+}
+
+.lp-journey-step h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--lp-dark-blue);
+    margin: 0 0 10px;
+}
+
+.lp-journey-step p {
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.65;
+    margin: 0;
+}
+
+
+/* ============================================================
+   Grant Eligibility
+   ============================================================ */
+
+.lp-grants {
+    padding: 80px 24px;
+    background: #fff;
+}
+
+.lp-grants-grid {
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 64px;
+    align-items: center;
+}
+
+.lp-label-mono {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--lp-dark-brown);
+    display: block;
+    margin-bottom: 12px;
+}
+
+.lp-grants-text h2 {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 400;
+    color: var(--lp-dark-blue);
+    margin: 0 0 16px;
+    line-height: 1.25;
+}
+
+.lp-highlight {
+    color: var(--lp-dark-brown);
+    font-weight: 600;
+}
+
+.lp-grants-text > p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.7;
+    margin: 0 0 24px;
+}
+
+.lp-grant-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.lp-grant-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.lp-grant-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    flex-shrink: 0;
+}
+
+.lp-badge-ehg     { background: #dbeafe; color: #1d4ed8; }
+.lp-badge-family   { background: #dcfce7; color: #15803d; }
+.lp-badge-singles  { background: #fef9c3; color: #854d0e; }
+.lp-badge-phg      { background: #fae8ff; color: #7e22ce; }
+
+/* Sample card */
+.lp-sample-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+    border: 1px solid #f0f0f0;
+}
+
+.lp-sample-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.lp-sample-town {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--lp-dark-blue);
+    letter-spacing: 0.06em;
+}
+
+.lp-sample-badge {
+    background: var(--lp-dark-blue);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.lp-sample-score {
+    background: #f3f4f6;
+    border-radius: 8px;
+    height: 28px;
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.lp-sample-score-bar {
+    background: linear-gradient(90deg, var(--lp-light-blue), var(--lp-dark-blue));
+    height: 100%;
+    border-radius: 8px;
+}
+
+.lp-sample-score span {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--lp-dark-blue);
+}
+
+.lp-sample-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    color: #555;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.lp-sample-grant span:last-child {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.lp-sample-effective {
+    font-weight: 600;
+    color: var(--lp-dark-blue);
+}
+
+.lp-sample-msr {
+    margin-top: 12px;
+    padding: 8px 12px;
+    background: #f0fdf4;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: #16a34a;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+/* ============================================================
+   CTA Banner
+   ============================================================ */
+
+.lp-cta {
+    padding: 64px 24px;
+    background: var(--lp-dark-blue);
+    text-align: center;
+    border-radius: 20px;
+    margin: 0 24px 48px;
+}
+
+.lp-cta h2 {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 400;
+    color: #fff;
+    margin: 0 0 8px;
+}
+
+.lp-cta p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1rem;
+    margin: 0 0 28px;
+}
+
+.lp-cta-actions {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.lp-btn-white {
+    background: #fff;
+    color: var(--lp-dark-blue);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 30px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.lp-btn-white:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.lp-btn-outline-white {
+    background: transparent;
+    color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 10px;
+    padding: 14px 30px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.lp-btn-outline-white:hover {
+    border-color: #fff;
+    background: rgba(255,255,255,0.08);
+}
+
+
+/* ============================================================
+   Footer
+   ============================================================ */
+
+.lp-footer {
+    background: var(--lp-dark-blue);
+    color: rgba(255,255,255,0.7);
+    padding: 56px 24px 28px;
+}
+
+.lp-footer-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 48px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+}
+
+.lp-footer-logo {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.lp-footer-tagline {
+    font-size: 0.85rem;
+    margin: 0;
+    color: rgba(255,255,255,0.45);
+}
+
+.lp-footer-links {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+}
+
+.lp-footer-links > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lp-footer-links strong {
+    color: #fff;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'DM Sans', sans-serif;
+}
+
+.lp-footer-links a {
+    font-size: 0.88rem;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.lp-footer-links a:hover {
+    color: #fff;
+}
+
+.lp-footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 20px;
+    font-size: 0.78rem;
+    text-align: center;
+    color: rgba(255,255,255,0.35);
+}
+
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+
+@media (max-width: 900px) {
+    .lp-benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lp-find-bto-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lp-find-bto-img {
+        min-height: 280px;
+    }
+
+    .lp-grants-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lp-journey-steps {
+        grid-template-columns: 1fr;
+    }
+
+    .lp-showcase-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lp-showcase-block {
+        display: none;
+    }
+
+    .navbar-center {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .lp-benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .lp-trusted .lp-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .lp-trusted-logos {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .lp-journey-header {
+        flex-direction: column;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .lp-cta {
+        margin: 0 12px 24px;
+        border-radius: 16px;
+    }
+}
