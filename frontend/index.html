@@ -4,62 +4,289 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomeMatch</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>HomeMatch — HDB BTO Finder for Singapore</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
 
-<!-- NAVBAR (injected by app.js) -->
+<!-- NAVBAR -->
 <div id="navbar-slot"></div>
 
 
-<!-- HOMEPAGE HERO -->
-<main class="container">
+<!-- ================================================================
+     HERO
+     ================================================================ -->
+<section class="lp-hero">
+    <div class="lp-blob lp-blob-1"></div>
+    <div class="lp-blob lp-blob-2"></div>
 
-    <h1>HomeMatch</h1>
+    <div class="lp-hero-inner">
+        <div class="lp-badge">🇸🇬 Made for Singapore First-Time Buyers</div>
 
-    <p class="tagline">
-        Find the best HDB location for your lifestyle and budget
-    </p>
+        <h1 class="lp-hero-title">
+            Find Your Perfect<br>
+            <span class="lp-gradient-text">HDB Flat</span>
+        </h1>
 
-    <p class="hero-sub">Personalised recommendations in minutes — no sign-up required</p>
+        <p class="lp-hero-sub">
+            Enter your income, eligibility and location preferences.
+            HomeMatch calculates your grants, ranks every town by match score,
+            and shows you exactly what you can afford.
+        </p>
 
-    <button class="start-btn" onclick="openModal()">
-        Get Started
-    </button>
+        <div class="lp-hero-actions">
+            <button class="lp-btn-primary" onclick="openModal('register')">
+                Get Started — It's Free
+            </button>
+            <button class="lp-btn-ghost" onclick="continueGuest()">
+                Try as Guest
+            </button>
+        </div>
 
-</main>
+        <div class="lp-hero-stats">
+            <div class="lp-stat">
+                <strong>24</strong><span>HDB Towns</span>
+            </div>
+            <div class="lp-stat-divider"></div>
+            <div class="lp-stat">
+                <strong>6</strong><span>Grant Types</span>
+            </div>
+            <div class="lp-stat-divider"></div>
+            <div class="lp-stat">
+                <strong>Live</strong><span>Resale Prices</span>
+            </div>
+        </div>
+    </div>
+</section>
 
 
-<!-- LOGIN MODAL -->
-<div id="loginModal" class="modal">
+<!-- ================================================================
+     HOW IT WORKS
+     ================================================================ -->
+<section class="lp-section lp-how" id="how-it-works">
+    <div class="lp-container">
+        <div class="lp-section-header">
+            <span class="lp-section-label">Simple 3-Step Process</span>
+            <h2>From Profile to Ranked Results</h2>
+            <p>No spreadsheets. No guesswork. HomeMatch does the number-crunching for you.</p>
+        </div>
 
+        <div class="lp-steps">
+            <div class="lp-step">
+                <div class="lp-step-num">1</div>
+                <div class="lp-step-icon">💰</div>
+                <h3>Your Financial Profile</h3>
+                <p>Enter your monthly income, CPF savings, preferred flat type and whether you're applying for BTO or resale.</p>
+            </div>
+            <div class="lp-step-arrow">→</div>
+            <div class="lp-step">
+                <div class="lp-step-num">2</div>
+                <div class="lp-step-icon">📍</div>
+                <h3>Location Preferences</h3>
+                <p>Rank what matters most — MRT access, commute time, schools, parks, proximity to parents and more.</p>
+            </div>
+            <div class="lp-step-arrow">→</div>
+            <div class="lp-step">
+                <div class="lp-step-num">3</div>
+                <div class="lp-step-icon">🏆</div>
+                <h3>Ranked Recommendations</h3>
+                <p>See every town scored and sorted by your priorities, with live resale prices and full grant breakdowns.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ================================================================
+     FEATURES
+     ================================================================ -->
+<section class="lp-section lp-features" id="features">
+    <div class="lp-container">
+        <div class="lp-section-header">
+            <span class="lp-section-label">Why HomeMatch</span>
+            <h2>Everything You Need in One Place</h2>
+        </div>
+
+        <div class="lp-feature-grid">
+            <div class="lp-feature-card">
+                <div class="lp-feature-icon lp-icon-blue">📊</div>
+                <h3>Live Resale Prices</h3>
+                <p>Powered by data.gov.sg — real transaction data from 2017 to now, updated regularly. BTO estimates derived from market rates.</p>
+            </div>
+            <div class="lp-feature-card">
+                <div class="lp-feature-icon lp-icon-green">🎁</div>
+                <h3>Full Grant Calculator</h3>
+                <p>EHG, CPF Family Grant, Singles Grant, Half-Housing Grant, Step-Up Grant and PHG — all computed from your actual profile.</p>
+            </div>
+            <div class="lp-feature-card">
+                <div class="lp-feature-icon lp-icon-amber">🗺️</div>
+                <h3>OneMap Commute Scoring</h3>
+                <p>Enter your workplace and we calculate real transit commute times to each town using Singapore's official OneMap routing API.</p>
+            </div>
+            <div class="lp-feature-card">
+                <div class="lp-feature-icon lp-icon-purple">⚖️</div>
+                <h3>MSR &amp; TDSR Checks</h3>
+                <p>We surface your Mortgage Servicing Ratio and flag if monthly repayments breach HDB's 30% MSR or MAS's 55% TDSR limit.</p>
+            </div>
+            <div class="lp-feature-card">
+                <div class="lp-feature-icon lp-icon-red">🏠</div>
+                <h3>BTO vs Resale Compare</h3>
+                <p>Side-by-side affordability breakdown — see upfront cost, effective price after grants and monthly mortgage for both options.</p>
+            </div>
+            <div class="lp-feature-card">
+                <div class="lp-feature-icon lp-icon-teal">💾</div>
+                <h3>Save &amp; Revisit</h3>
+                <p>Create a free account to save your searches and return to your results anytime. No data is stored for guest sessions.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ================================================================
+     GRANT ESTIMATOR TEASER
+     ================================================================ -->
+<section class="lp-section lp-grants-teaser">
+    <div class="lp-container">
+        <div class="lp-grants-inner">
+            <div class="lp-grants-text">
+                <span class="lp-section-label">Grant Eligibility</span>
+                <h2>You May Qualify for Up to<br><span class="lp-gradient-text">$230,000</span> in Grants</h2>
+                <p>HomeMatch checks all six CPF/HDB housing grant schemes against your profile automatically.</p>
+                <ul class="lp-grant-list">
+                    <li><span class="lp-grant-badge lp-grant-ehg">EHG</span> Enhanced CPF Housing Grant — up to <strong>$80,000</strong></li>
+                    <li><span class="lp-grant-badge lp-grant-family">Family</span> CPF Housing Grant (Family) — up to <strong>$80,000</strong></li>
+                    <li><span class="lp-grant-badge lp-grant-singles">Singles</span> CPF Housing Grant (Singles) — up to <strong>$40,000</strong></li>
+                    <li><span class="lp-grant-badge lp-grant-phg">PHG</span> Proximity Housing Grant — up to <strong>$30,000</strong></li>
+                </ul>
+                <button class="lp-btn-primary" onclick="openModal('register')">Check My Grants</button>
+            </div>
+            <div class="lp-grants-card">
+                <div class="lp-sample-card">
+                    <div class="lp-sample-header">
+                        <span class="lp-sample-town">TAMPINES</span>
+                        <span class="lp-sample-badge">Best Match</span>
+                    </div>
+                    <div class="lp-sample-score">
+                        <div class="lp-sample-score-bar" style="width:88%"></div>
+                        <span>88 / 100</span>
+                    </div>
+                    <div class="lp-sample-row">
+                        <span>4-Room Resale</span>
+                        <span>$560,000</span>
+                    </div>
+                    <div class="lp-sample-row lp-sample-grant">
+                        <span>Estimated Grants</span>
+                        <span>− $110,000</span>
+                    </div>
+                    <div class="lp-sample-row lp-sample-effective">
+                        <span>Effective Price</span>
+                        <strong>$450,000</strong>
+                    </div>
+                    <div class="lp-sample-row">
+                        <span>Est. Monthly Mortgage</span>
+                        <span>~$1,560 / mo</span>
+                    </div>
+                    <div class="lp-sample-msr lp-msr-ok">MSR 26% — within HDB limit ✓</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- ================================================================
+     CTA BANNER
+     ================================================================ -->
+<section class="lp-cta">
+    <div class="lp-container">
+        <h2>Ready to Find Your Flat?</h2>
+        <p>Takes less than 3 minutes. No spreadsheets required.</p>
+        <div class="lp-hero-actions">
+            <button class="lp-btn-white" onclick="openModal('register')">Create Free Account</button>
+            <button class="lp-btn-outline-white" onclick="continueGuest()">Continue as Guest</button>
+        </div>
+    </div>
+</section>
+
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer class="lp-footer">
+    <div class="lp-container">
+        <div class="lp-footer-top">
+            <div>
+                <div class="lp-footer-logo">HomeMatch</div>
+                <p class="lp-footer-tagline">Singapore's HDB &amp; BTO Finder</p>
+            </div>
+            <div class="lp-footer-links">
+                <div>
+                    <strong>Product</strong>
+                    <a href="#how-it-works">How It Works</a>
+                    <a href="#features">Features</a>
+                    <a href="input.html">Get Started</a>
+                </div>
+                <div>
+                    <strong>Resources</strong>
+                    <a href="https://www.hdb.gov.sg" target="_blank" rel="noopener">HDB Official</a>
+                    <a href="https://www.hdb.gov.sg/residential/buying-a-flat/understanding-your-eligibility-and-housing-loan-options/flat-and-grant-eligibility" target="_blank" rel="noopener">Grant Eligibility</a>
+                    <a href="https://data.gov.sg" target="_blank" rel="noopener">data.gov.sg</a>
+                </div>
+            </div>
+        </div>
+        <div class="lp-footer-bottom">
+            <p>© 2025 HomeMatch · SC2006 Group Project · Data sourced from data.gov.sg and HDB</p>
+            <p class="lp-footer-disclaimer">For informational purposes only. Always verify eligibility with HDB before making financial decisions.</p>
+        </div>
+    </div>
+</footer>
+
+
+<!-- ================================================================
+     AUTH MODAL (Sign In / Register tabs)
+     ================================================================ -->
+<div id="authModal" class="modal">
     <div class="modal-content">
-
         <span class="close" onclick="closeModal()">×</span>
 
         <div class="modal-icon">🏠</div>
-
         <h2>Welcome to HomeMatch</h2>
-        <p class="modal-sub">Sign in to save your results and preferences</p>
 
-        <input type="email" id="loginEmail" placeholder="Email address" autocomplete="email">
-        <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+        <!-- Tab switcher -->
+        <div class="auth-tabs">
+            <button id="tab-login"    class="auth-tab active" onclick="switchTab('login')">Sign In</button>
+            <button id="tab-register" class="auth-tab"        onclick="switchTab('register')">Create Account</button>
+        </div>
 
-        <button class="login-btn">Sign In</button>
+        <!-- Sign In form -->
+        <div id="form-login">
+            <input type="email"    id="loginEmail"    placeholder="Email address"   autocomplete="email">
+            <input type="password" id="loginPassword" placeholder="Password"        autocomplete="current-password">
+            <div id="loginError" class="auth-error" style="display:none"></div>
+            <button class="login-btn" onclick="handleLogin()">Sign In</button>
+            <p class="auth-forgot"><a href="#" onclick="showForgotPassword()">Forgot password?</a></p>
+        </div>
+
+        <!-- Register form -->
+        <div id="form-register" style="display:none">
+            <input type="text"     id="regName"       placeholder="Full name"       autocomplete="name">
+            <input type="email"    id="regEmail"      placeholder="Email address"   autocomplete="email">
+            <input type="password" id="regPassword"   placeholder="Password (min 8 chars)" autocomplete="new-password">
+            <select id="regCitizenship">
+                <option value="">Citizenship status</option>
+                <option value="sc">Singapore Citizen (SC)</option>
+                <option value="pr">Permanent Resident (PR)</option>
+            </select>
+            <div id="registerError" class="auth-error" style="display:none"></div>
+            <button class="login-btn" onclick="handleRegister()">Create Account</button>
+        </div>
 
         <div class="divider"><span>or</span></div>
-
-        <button class="create-btn">Create Account</button>
-
-        <button class="guest-btn" onclick="continueGuest()">
-            Continue as Guest
-        </button>
-
+        <button class="guest-btn" onclick="continueGuest()">Continue as Guest</button>
     </div>
-
 </div>
 
 
