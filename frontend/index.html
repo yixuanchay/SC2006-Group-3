@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomeMatch — HDB BTO Finder for Singapore</title>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/landing.css">
 </head>
@@ -20,15 +20,22 @@
      HERO
      ================================================================ -->
 <section class="lp-hero">
-    <div class="lp-hero-inner">
+    <div class="lp-container">
         <h1 class="lp-hero-title">Find Your Dream Home</h1>
 
-        <div class="lp-laptop-mockup">
-            <div class="lp-laptop-screen">
-                <img src="images/hdb-screenshot.png" alt="HDB Homes Portal"
-                     style="width:100%;height:auto;display:block;">
+        <div class="lp-laptop-wrapper">
+            <div class="lp-laptop-mockup">
+                <div class="lp-laptop-bezel">
+                    <div class="lp-laptop-screen">
+                        <img src="images/hdb-screenshot.png" alt="HDB Homes Portal">
+                    </div>
+                </div>
+                <div class="lp-laptop-base">
+                    <div class="lp-laptop-notch"></div>
+                </div>
             </div>
-            <div class="lp-laptop-base"></div>
+            <!-- Decorative background shape -->
+            <div class="lp-hero-deco"></div>
         </div>
     </div>
 </section>
@@ -39,14 +46,14 @@
      ================================================================ -->
 <section class="lp-trusted">
     <div class="lp-container">
-        <span class="lp-trusted-label">Trusted by:</span>
+        <span class="lp-trusted-label">Trusted By:</span>
         <div class="lp-trusted-logos">
-            <img src="images/logo-hdb.png" alt="HDB" style="height:45px;width:auto;max-width:130px;object-fit:contain;">
-            <img src="images/logo-cpf.png" alt="CPF" style="height:45px;width:auto;max-width:50px;object-fit:contain;">
-            <img src="images/logo-lta.png" alt="LTA" style="height:35px;width:auto;max-width:150px;object-fit:contain;">
-            <img src="images/logo-datagov.png" alt="Data.gov.sg" style="height:35px;width:auto;max-width:130px;object-fit:contain;">
-            <img src="images/logo-onemap.png" alt="OneMap" style="height:45px;width:auto;max-width:55px;object-fit:contain;">
-            <img src="images/logo-moe.png" alt="MOE" style="height:45px;width:auto;max-width:70px;object-fit:contain;">
+            <img src="images/logo-moe.png"     alt="Ministry of Education">
+            <img src="images/logo-lta.png"     alt="Land Transport Authority">
+            <img src="images/logo-cpf.png"     alt="CPF Board">
+            <img src="images/logo-onemap.png"  alt="OneMap">
+            <img src="images/logo-datagov.png" alt="Data.gov.sg">
+            <img src="images/logo-hdb.png"     alt="HDB">
         </div>
     </div>
 </section>
@@ -59,35 +66,43 @@
     <div class="lp-container">
         <div class="lp-benefits-header">
             <span class="lp-label">Benefits</span>
-            <h2>We've cracked the code.</h2>
+            <h2>We've Cracked The Code.</h2>
             <p>HomeMatch recommends the perfect BTO for you, without data overload.</p>
         </div>
 
         <div class="lp-benefits-grid">
             <div class="lp-benefit-card">
                 <div class="lp-benefit-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#203250" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    <img src="images/icon-decision.png" alt="Smarter Decision-Making"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                    <svg style="display:none" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#203250" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9l2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9l2.83-2.83"/></svg>
                 </div>
                 <h3>Smarter Decision-Making</h3>
                 <p>Helps users compare BTO projects more easily based on budget, location, amenities, and eligibility, so they can make more informed housing choices.</p>
             </div>
             <div class="lp-benefit-card">
                 <div class="lp-benefit-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#203250" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                    <img src="images/icon-recommendations.png" alt="Personalised Recommendations"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                    <svg style="display:none" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#203250" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg>
                 </div>
                 <h3>Personalised Recommendations</h3>
                 <p>Provides users with tailored flat suggestions based on their financial situation, lifestyle preferences, and priorities such as proximity to work, schools, or MRT.</p>
             </div>
             <div class="lp-benefit-card">
                 <div class="lp-benefit-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#203250" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    <img src="images/icon-financial.png" alt="Simplified Financial Planning"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                    <svg style="display:none" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#203250" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="2" y1="7" x2="22" y2="7"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
                 </div>
                 <h3>Simplified Financial Planning</h3>
                 <p>Gives users a clearer understanding of affordability through mortgage estimates, downpayment calculations, and budget planning tools.</p>
             </div>
             <div class="lp-benefit-card">
                 <div class="lp-benefit-icon">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#203250" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                    <img src="images/icon-visualisation.png" alt="Better Visualisation of Options"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+                    <svg style="display:none" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#203250" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
                 </div>
                 <h3>Better Visualisation of Options</h3>
                 <p>Lets users view and compare different BTO flats in a clear and user-friendly way, reducing confusion and making the selection process less overwhelming.</p>
@@ -101,12 +116,11 @@
      HDB IMAGE SHOWCASE
      ================================================================ -->
 <section class="lp-showcase">
-    <div class="lp-showcase-grid">
-        <div class="lp-showcase-block lp-showcase-beige"></div>
-        <div class="lp-showcase-img">
-            <img src="images/hdb-building.png" alt="HDB flats"
-                 style="width:100%;height:100%;object-fit:cover;"
-                 onerror="this.parentElement.style.background='#C2C7B8';">
+    <div class="lp-showcase-layout">
+        <div class="lp-showcase-deco-top"></div>
+        <div class="lp-showcase-deco-bottom"></div>
+        <div class="lp-showcase-image">
+            <img src="images/hdb-building.png" alt="HDB flats in Singapore">
         </div>
     </div>
 </section>
@@ -120,7 +134,7 @@
         <div class="lp-find-bto-grid">
             <div class="lp-find-bto-text">
                 <h2>Find the Right BTO for You</h2>
-                <p>Our BTO Finder turns complex housing information into clear, personalized insights so you can make smarter decisions with confidence.</p>
+                <p class="lp-find-bto-desc">Our BTO Finder turns complex housing information into clear, personalized insights so you can make smarter decisions with confidence.</p>
 
                 <div class="lp-find-steps">
                     <div class="lp-find-step">
@@ -152,9 +166,7 @@
                 <button class="lp-btn-dark" onclick="continueGuest()">Discover More</button>
             </div>
             <div class="lp-find-bto-img">
-                <img src="images/hdb-building.png" alt="HDB buildings"
-                     style="width:100%;height:100%;object-fit:cover;border-radius:12px;"
-                     onerror="this.parentElement.style.background='#A0B6D0'; this.parentElement.style.borderRadius='12px';">
+                <img src="images/hdb-building.png" alt="HDB buildings">
             </div>
         </div>
     </div>
@@ -184,7 +196,7 @@
             </div>
             <div class="lp-journey-step">
                 <span class="lp-journey-num">03</span>
-                <h3>Compare Your Options</h3>
+                <h3>Compare and Decide</h3>
                 <p>View shortlisted BTO projects side by side so you can identify the best option with greater clarity and confidence.</p>
             </div>
         </div>
@@ -199,16 +211,18 @@
     <div class="lp-container">
         <div class="lp-grants-grid">
             <div class="lp-grants-text">
-                <span class="lp-label-mono">Grant Eligibility</span>
-                <h2>You May Qualify for Up to<br><span class="lp-highlight">$230,000</span> in Grants</h2>
-                <p>HomeMatch checks all six CPF/HDB housing grant schemes against your profile automatically.</p>
-                <ul class="lp-grant-list">
-                    <li><span class="lp-grant-badge lp-badge-ehg">EHG</span> Enhanced CPF Housing Grant — up to <strong>$80,000</strong></li>
-                    <li><span class="lp-grant-badge lp-badge-family">Family</span> CPF Housing Grant (Family) — up to <strong>$80,000</strong></li>
-                    <li><span class="lp-grant-badge lp-badge-singles">Singles</span> CPF Housing Grant (Singles) — up to <strong>$40,000</strong></li>
-                    <li><span class="lp-grant-badge lp-badge-phg">PHG</span> Proximity Housing Grant — up to <strong>$30,000</strong></li>
-                </ul>
-                <button class="lp-btn-dark" onclick="openModal('register')">Check My Grants</button>
+                <div class="lp-grants-text-inner">
+                    <span class="lp-label-mono">Grant Eligibility</span>
+                    <h2>You May Qualify for Up to<br><span class="lp-highlight">$230,000</span> in Grants</h2>
+                    <p>HomeMatch checks all six CPF/HDB housing grant schemes against your profile automatically.</p>
+                    <ul class="lp-grant-list">
+                        <li><span class="lp-grant-badge lp-badge-ehg">EHG</span> Enhanced CPF Housing Grant — up to <strong>$80,000</strong></li>
+                        <li><span class="lp-grant-badge lp-badge-family">Family</span> CPF Housing Grant (Family) — up to <strong>$80,000</strong></li>
+                        <li><span class="lp-grant-badge lp-badge-singles">Singles</span> CPF Housing Grant (Singles) — up to <strong>$40,000</strong></li>
+                        <li><span class="lp-grant-badge lp-badge-phg">PHG</span> Proximity Housing Grant — up to <strong>$30,000</strong></li>
+                    </ul>
+                    <button class="lp-btn-dark" onclick="openModal('register')">Discover More</button>
+                </div>
             </div>
             <div class="lp-grants-card">
                 <div class="lp-sample-card">
@@ -236,12 +250,12 @@
      CTA BANNER
      ================================================================ -->
 <section class="lp-cta">
-    <div class="lp-container">
+    <div class="lp-cta-inner">
         <h2>Ready to Find Your BTO?</h2>
         <p>Takes less than 3 minutes. No spreadsheets required.</p>
         <div class="lp-cta-actions">
-            <button class="lp-btn-white" onclick="openModal('register')">Create Free Account</button>
-            <button class="lp-btn-outline-white" onclick="continueGuest()">Continue as Guest</button>
+            <button class="lp-btn-cta-primary" onclick="openModal('register')">Create Free Account</button>
+            <button class="lp-btn-cta-secondary" onclick="continueGuest()">Continue as Guest</button>
         </div>
     </div>
 </section>

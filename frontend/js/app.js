@@ -195,7 +195,7 @@ function refreshNavbar() {
     const navHTML = `
         <nav class="navbar">
             <div class="logo" onclick="goHome()" style="cursor:pointer;">
-                <img src="images/logo-homematch.png" alt="HomeMatch" class="logo-img" style="height:56px;width:56px;object-fit:contain;">
+                <img src="images/HomeMatch Logo.png" alt="HomeMatch" class="logo-img">
             </div>
             <div class="navbar-center">
                 <a class="navbar-link" href="index.html">Home</a>
@@ -207,8 +207,8 @@ function refreshNavbar() {
                     <a class="navbar-link" href="dashboard.html">Dashboard</a>
                     <button class="nav-btn nav-btn-logout" onclick="handleLogout()">Log Out</button>
                 ` : `
-                    <button class="nav-btn nav-btn-signup" onclick="openModal('register')">Sign Up</button>
                     <button class="nav-btn nav-btn-login" onclick="openModal('login')">Log In</button>
+                    <button class="nav-btn nav-btn-signup" onclick="openModal('register')">Sign Up</button>
                 `}
             </div>
         </nav>`;
