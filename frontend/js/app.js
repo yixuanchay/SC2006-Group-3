@@ -69,14 +69,21 @@ function switchTab(tab) {
     const tabRegister  = document.getElementById('tab-register');
     if (!loginForm || !registerForm) return;
 
+    const activeStyle = 'background:#e0e0e0;color:#444;border:1.5px solid #d0d0d0;border-radius:24px;padding:10px 28px;font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;';
+    const inactiveStyle = 'background:transparent;color:#999;border:1.5px solid #ddd;border-radius:24px;padding:10px 28px;font-family:DM Sans,sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;';
+
     if (tab === 'login') {
         loginForm.style.display    = 'block';
         registerForm.style.display = 'none';
+        tabLogin.style.cssText = activeStyle;
+        tabRegister.style.cssText = inactiveStyle;
         tabLogin.classList.add('active');
         tabRegister.classList.remove('active');
     } else {
         loginForm.style.display    = 'none';
         registerForm.style.display = 'block';
+        tabLogin.style.cssText = inactiveStyle;
+        tabRegister.style.cssText = activeStyle;
         tabLogin.classList.remove('active');
         tabRegister.classList.add('active');
     }
@@ -93,6 +100,23 @@ function clearAuthErrors() {
         const el = document.getElementById(id);
         if (el) { el.textContent = ''; el.style.display = 'none'; }
     });
+}
+
+/* ================================================================
+   Password Toggle
+   ================================================================ */
+
+function togglePassword(inputId, btn) {
+    const input = document.getElementById(inputId);
+    if (!input) return;
+    const isPassword = input.type === 'password';
+    input.type = isPassword ? 'text' : 'password';
+    const eyeOff = btn.querySelector('.eye-off');
+    const eyeOn = btn.querySelector('.eye-on');
+    if (eyeOff && eyeOn) {
+        eyeOff.style.display = isPassword ? 'none' : 'block';
+        eyeOn.style.display = isPassword ? 'block' : 'none';
+    }
 }
 
 /* ================================================================
@@ -129,9 +153,10 @@ async function handleLogin() {
 }
 
 async function handleRegister() {
-    const name        = document.getElementById('regName')?.value.trim();
-    const email       = document.getElementById('regEmail')?.value.trim();
-    const password    = document.getElementById('regPassword')?.value;
+    const name           = document.getElementById('regName')?.value.trim();
+    const email          = document.getElementById('regEmail')?.value.trim();
+    const password       = document.getElementById('regPassword')?.value;
+    const passwordConfirm = document.getElementById('regPasswordConfirm')?.value;
 
     if (!email || !password) {
         showAuthError('registerError', 'Email and password are required.');
@@ -139,6 +164,10 @@ async function handleRegister() {
     }
     if (password.length < 8) {
         showAuthError('registerError', 'Password must be at least 8 characters.');
+        return;
+    }
+    if (password !== passwordConfirm) {
+        showAuthError('registerError', 'Passwords do not match.');
         return;
     }
 

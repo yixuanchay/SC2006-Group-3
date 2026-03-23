@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomeMatch — HDB BTO Finder for Singapore</title>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/landing.css?v=3">
 </head>
 
 <body>
@@ -299,28 +299,49 @@
 <div id="authModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
-        <div class="modal-icon">🏠</div>
+        <div class="modal-logo">
+            <img src="images/HomeMatch Logo.png" alt="HomeMatch" style="height:80px;width:auto;max-width:200px;object-fit:contain;">
+        </div>
         <h2>Welcome to HomeMatch</h2>
-        <div class="auth-tabs">
-            <button id="tab-login" class="auth-tab active" onclick="switchTab('login')">Sign In</button>
-            <button id="tab-register" class="auth-tab" onclick="switchTab('register')">Create Account</button>
+        <div class="auth-tabs" style="display:flex;gap:8px;margin:16px 0 24px;justify-content:center;">
+            <button id="tab-login" class="auth-tab active" style="background:#e0e0e0;color:#444;border:1.5px solid #d0d0d0;border-radius:24px;padding:10px 28px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;" onclick="switchTab('login')">Sign In</button>
+            <button id="tab-register" class="auth-tab" style="background:transparent;color:#999;border:1.5px solid #ddd;border-radius:24px;padding:10px 28px;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:500;cursor:pointer;" onclick="switchTab('register')">Create Account</button>
         </div>
         <div id="form-login">
-            <input type="email" id="loginEmail" placeholder="Email address" autocomplete="email">
-            <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+            <input type="email" id="loginEmail" placeholder="Email Address" autocomplete="email">
+            <div class="input-password-wrap" style="position:relative;width:100%;margin:6px 0;">
+                <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+                <button type="button" class="password-toggle" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none!important;border:none!important;box-shadow:none!important;padding:4px!important;width:auto!important;height:auto!important;color:inherit!important;z-index:2;" onclick="togglePassword('loginPassword', this)" aria-label="Toggle password visibility">
+                    <svg class="eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                    <svg class="eye-on" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
             <div id="loginError" class="auth-error" style="display:none"></div>
-            <button class="login-btn" onclick="handleLogin()">Sign In</button>
-            <p class="auth-forgot"><a href="#" onclick="showForgotPassword()">Forgot password?</a></p>
+            <button class="login-btn" style="background:#EAD5C1!important;color:#203250!important;border:none!important;border-radius:24px!important;" onclick="handleLogin()">Sign In</button>
+            <p class="auth-forgot"><a href="#" style="color:#B39E8F;text-decoration:none;" onclick="showForgotPassword()">Forgot password?</a></p>
         </div>
         <div id="form-register" style="display:none">
-            <input type="text" id="regName" placeholder="Full name" autocomplete="name">
-            <input type="email" id="regEmail" placeholder="Email address" autocomplete="email">
-            <input type="password" id="regPassword" placeholder="Password (min 8 chars)" autocomplete="new-password">
+            <input type="text" id="regName" placeholder="Username" autocomplete="username">
+            <input type="email" id="regEmail" placeholder="Email Address" autocomplete="email">
+            <div class="input-password-wrap" style="position:relative;width:100%;margin:6px 0;">
+                <input type="password" id="regPassword" placeholder="Password" autocomplete="new-password">
+                <button type="button" class="password-toggle" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none!important;border:none!important;box-shadow:none!important;padding:4px!important;width:auto!important;height:auto!important;color:inherit!important;z-index:2;" onclick="togglePassword('regPassword', this)" aria-label="Toggle password visibility">
+                    <svg class="eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                    <svg class="eye-on" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
+            <div class="input-password-wrap" style="position:relative;width:100%;margin:6px 0;">
+                <input type="password" id="regPasswordConfirm" placeholder="Reconfirm Password" autocomplete="new-password">
+                <button type="button" class="password-toggle" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none!important;border:none!important;box-shadow:none!important;padding:4px!important;width:auto!important;height:auto!important;color:inherit!important;z-index:2;" onclick="togglePassword('regPasswordConfirm', this)" aria-label="Toggle password visibility">
+                    <svg class="eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+                    <svg class="eye-on" style="display:none" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </button>
+            </div>
             <div id="registerError" class="auth-error" style="display:none"></div>
-            <button class="login-btn" onclick="handleRegister()">Create Account</button>
+            <button class="login-btn" style="background:#EAD5C1!important;color:#203250!important;border:none!important;border-radius:24px!important;" onclick="handleRegister()">Create Account</button>
         </div>
-        <div class="divider"><span>or</span></div>
-        <button class="guest-btn" onclick="continueGuest()">Continue as Guest</button>
+        <div class="divider"><span>Or</span></div>
+        <button class="guest-btn" style="background:#C2C7B8!important;color:#203250!important;border:none!important;border-radius:24px!important;" onclick="continueGuest()">Guest Sign In</button>
     </div>
 </div>
 

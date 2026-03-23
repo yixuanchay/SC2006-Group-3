@@ -41,12 +41,13 @@ body {
 .navbar {
     max-height: none;
     overflow: visible;
-    padding: 16px 48px;
+    padding: 8px 48px;
     background: #fff;
     border-bottom: 1px solid #f0f0f0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
 }
 
 .logo {
@@ -57,15 +58,20 @@ body {
 
 .logo img,
 .logo-img {
-    height: 70px !important;
+    height: 90px !important;
     width: auto !important;
-    max-height: 70px !important;
+    max-height: 90px !important;
     object-fit: contain !important;
 }
 
 .navbar-center {
     display: flex;
     gap: 32px;
+    align-items: center;
+    margin: 0 auto;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .navbar-link {

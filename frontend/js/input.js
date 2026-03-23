@@ -63,6 +63,15 @@ function showStep(index) {
     // Update move-button disabled states on pref list
     if (index === 2) updateMoveBtnStates();
 
+    // Swap background image per step
+    var bgImages = [
+        "images/personal-information.png",
+        "images/financial-calc.png",
+        "images/bto-choosepreference.jpg"
+    ];
+    var bgImg = document.querySelector(".input-page-bg img");
+    if (bgImg && bgImages[index]) bgImg.src = bgImages[index];
+
     currentStep = index;
 }
 
@@ -257,7 +266,11 @@ function updateEligibilityBanner() {
     }
 
     const result = checkEligibility(snap);
-    const icons  = { ok: "✅", warning: "⚠️", error: "❌" };
+    const icons  = {
+        ok:      '<img src="images/Checkmark Icon.png" alt="Eligible">',
+        warning: '<img src="images/Caution Icon.png" alt="Warning">',
+        error:   '<img src="images/Close Icon.png" alt="Not Eligible">'
+    };
 
     banner.className = `eligibility-banner ${result.type}`;
     banner.style.display = "block";

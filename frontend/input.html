@@ -4,41 +4,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HomeMatch Setup</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>HomeMatch — Customise Your Preference</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css?v=4">
+    <link rel="stylesheet" href="css/input-landing.css?v=4">
 </head>
 
 <body>
 
-<div id="navbar-slot"></div>
+<!-- ================================================================
+     HERO / SPLASH SCREEN — shown first
+     ================================================================ -->
+<button class="hero-back-btn" style="position:fixed;top:20px;left:24px;z-index:100;background:rgba(255,255,255,0.2);color:#fff;border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:500;cursor:pointer;transition:all 0.2s;backdrop-filter:blur(8px);" onclick="window.location.href='index.html'" onmouseover="this.style.background='rgba(255,255,255,0.35)'" onmouseout="this.style.background='rgba(255,255,255,0.2)'">← Back</button>
 
-<div class="form-container">
+<section id="inputHero" class="input-hero">
+    <div class="input-hero-bg">
+        <img src="images/bto-choosepreference.jpg" alt="HDB BTO Development" id="heroBgImg"
+             onerror="this.style.display='none';">
+        <div class="input-hero-overlay"></div>
+    </div>
+    <div class="input-hero-content">
+        <p class="input-hero-label" style="color:rgba(255,255,255,0.6)!important;">Personal Questions</p>
+        <h1 style="color:#fff!important;font-family:'Crimson Text',Georgia,serif!important;background:none!important;-webkit-background-clip:unset!important;-webkit-text-fill-color:#fff!important;background-clip:unset!important;">Customise Your Preference</h1>
+        <p class="input-hero-desc" style="color:rgba(255,255,255,0.85)!important;">Tell us what matters most to you, from budget and location to nearby amenities, so we can recommend the most suitable BTO options.</p>
+        <button class="input-hero-btn" onclick="showForm()">Start</button>
+    </div>
+</section>
 
-    <h2>HomeMatch Setup</h2>
-    <p class="step-progress-label" id="stepProgressLabel">Step 1 of 3 — Personal Information</p>
+<!-- ================================================================
+     FORM — hidden initially, shown when user clicks Start
+     ================================================================ -->
+<div id="navbar-slot" style="display:none;"></div>
+<div id="inputFormWrapper" class="input-page-wrapper" style="display:none;">
+    <div class="input-page-bg">
+        <img src="images/personal-information.png" alt="Background">
+    </div>
 
-    <!-- STEP BAR -->
-    <div class="step-bar">
-        <div class="step active" data-step="0" onclick="goStep(0)">
-            <div class="step-circle"><span class="step-number">1</span><span class="step-check">✓</span></div>
-            <span class="step-label">Personal</span>
+    <!-- Brown top bar with header + step bar -->
+    <div class="input-page-top-bar">
+        <div class="input-page-header">
+            <img src="images/HomeMatch Logo.png" alt="HomeMatch">
+            <h1 style="background:none!important;-webkit-background-clip:unset!important;-webkit-text-fill-color:#fff!important;">HomeMatch Set Up</h1>
         </div>
-        <div class="step-line"></div>
-        <div class="step" data-step="1" onclick="goStep(1)">
-            <div class="step-circle"><span class="step-number">2</span><span class="step-check">✓</span></div>
-            <span class="step-label">Financial</span>
-        </div>
-        <div class="step-line"></div>
-        <div class="step" data-step="2" onclick="goStep(2)">
-            <div class="step-circle"><span class="step-number">3</span><span class="step-check">✓</span></div>
-            <span class="step-label">Preferences</span>
+
+        <!-- Step Bar -->
+        <div class="step-bar-outer" style="max-width:600px;margin:20px auto 0;padding:0 24px;">
+        <div class="step-bar">
+            <div class="step active" data-step="0" onclick="goStep(0)">
+                <div class="step-circle"><span class="step-number">1</span><span class="step-check">✓</span></div>
+                <span class="step-label">PERSONAL</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="1" onclick="goStep(1)">
+                <div class="step-circle"><span class="step-number">2</span><span class="step-check">✓</span></div>
+                <span class="step-label">FINANCIAL</span>
+            </div>
+            <div class="step-line"></div>
+            <div class="step" data-step="2" onclick="goStep(2)">
+                <div class="step-circle"><span class="step-number">3</span><span class="step-check">✓</span></div>
+                <span class="step-label">PREFERENCES</span>
+            </div>
         </div>
     </div>
+    </div><!-- end input-page-top-bar -->
+
+<div id="inputForm" class="form-container">
 
     <!-- ELIGIBILITY BANNER (updated dynamically) -->
     <div id="eligibilityBanner" class="eligibility-banner"></div>
-
 
     <!-- ======================================================
          STEP 1 — Personal Information
@@ -101,7 +137,8 @@
             <option value="executive">Executive</option>
         </select>
 
-        <div class="form-nav">
+        <div class="form-nav" style="justify-content:space-between;">
+            <button class="back-btn" onclick="window.history.back()">← Back</button>
             <button onclick="nextStep()">Continue →</button>
         </div>
 
@@ -209,100 +246,60 @@
          ====================================================== -->
     <div class="form-step">
 
-        <h3>Location Preferences</h3>
+        <h3>Preferences</h3>
 
         <p class="pref-hint">
-            Drag to reorder — or use ↑ ↓ buttons to rank what matters most
+            Drag the items to rank what matters most when choosing a home
         </p>
 
         <ul id="preferenceList">
 
             <li class="pref-item" data-factor="mrt" data-label="MRT Accessibility">
                 <span class="rank"></span>
-                <span class="drag">☰</span>
-                <span class="icon">🚆</span>
+                <span class="icon"><img src="images/Train Icon.png" alt="MRT"></span>
                 <span class="pref-label">MRT Accessibility</span>
-                <div class="pref-move-btns">
-                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
-                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
-                </div>
-            </li>
-
-            <li class="pref-item" data-factor="commute" data-label="Commute to Workplace">
-                <span class="rank"></span>
-                <span class="drag">☰</span>
-                <span class="icon">💼</span>
-                <span class="pref-label">Commute to Workplace</span>
-                <div class="pref-move-btns">
-                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
-                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
-                </div>
             </li>
 
             <li class="pref-item" data-factor="schools" data-label="Schools Nearby">
                 <span class="rank"></span>
-                <span class="drag">☰</span>
-                <span class="icon">🏫</span>
+                <span class="icon"><img src="images/School Icon.png" alt="Schools"></span>
                 <span class="pref-label">Schools Nearby</span>
-                <div class="pref-move-btns">
-                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
-                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
-                </div>
             </li>
 
             <li class="pref-item" data-factor="parks" data-label="Parks &amp; Recreation">
                 <span class="rank"></span>
-                <span class="drag">☰</span>
-                <span class="icon">🌳</span>
+                <span class="icon"><img src="images/Nature Icon.png" alt="Parks"></span>
                 <span class="pref-label">Parks &amp; Recreation</span>
-                <div class="pref-move-btns">
-                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
-                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
-                </div>
             </li>
 
             <li class="pref-item" data-factor="malls" data-label="Shopping Malls">
                 <span class="rank"></span>
-                <span class="drag">☰</span>
-                <span class="icon">🛍️</span>
+                <span class="icon"><img src="images/Mall Icon.png" alt="Malls"></span>
                 <span class="pref-label">Shopping Malls</span>
-                <div class="pref-move-btns">
-                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
-                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
-                </div>
             </li>
 
-            <li class="pref-item" data-factor="supermarkets" data-label="Supermarkets">
+            <li class="pref-item" data-factor="supermarkets" data-label="Near Supermarkets">
                 <span class="rank"></span>
-                <span class="drag">☰</span>
-                <span class="icon">🛒</span>
-                <span class="pref-label">Supermarkets</span>
-                <div class="pref-move-btns">
-                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
-                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
-                </div>
+                <span class="icon"><img src="images/Grocery Cart Icon.png" alt="Supermarkets"></span>
+                <span class="pref-label">Near Supermarkets</span>
             </li>
 
-            <li class="pref-item" data-factor="community" data-label="Community Clubs / Sports Centres">
+            <li class="pref-item" data-factor="community" data-label="Community Clubs / Sport Centres">
                 <span class="rank"></span>
-                <span class="drag">☰</span>
-                <span class="icon">🏟️</span>
-                <span class="pref-label">Community Clubs / Sports Centres</span>
-                <div class="pref-move-btns">
-                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
-                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
-                </div>
+                <span class="icon"><img src="images/Sport Icon.png" alt="Sports"></span>
+                <span class="pref-label">Community Clubs / Sport Centres</span>
             </li>
 
             <li class="pref-item" data-factor="parents" data-label="Near Parents">
                 <span class="rank"></span>
-                <span class="drag">☰</span>
-                <span class="icon">👨‍👩‍👧</span>
+                <span class="icon"><img src="images/Parents Icon.png" alt="Parents"></span>
                 <span class="pref-label">Near Parents</span>
-                <div class="pref-move-btns">
-                    <button class="pref-move-btn" onclick="movePref(this,-1)" aria-label="Move up">▲</button>
-                    <button class="pref-move-btn" onclick="movePref(this,1)" aria-label="Move down">▼</button>
-                </div>
+            </li>
+
+            <li class="pref-item" data-factor="commute" data-label="Near Workplace">
+                <span class="rank"></span>
+                <span class="icon"><img src="images/Work Suitcase Icon.png" alt="Workplace"></span>
+                <span class="pref-label">Near Workplace</span>
             </li>
 
         </ul>
@@ -315,10 +312,29 @@
     </div>
 
 </div>
+</div><!-- end input-page-wrapper -->
 
-<script src="js/app.js"></script>
-<script src="js/hdb.js"></script>
-<script src="js/input.js"></script>
+<script src="js/app.js?v=4"></script>
+<script src="js/hdb.js?v=4"></script>
+<script src="js/input.js?v=4"></script>
+<script>
+function showForm() {
+    document.getElementById('inputHero').style.display = 'none';
+    document.getElementById('inputFormWrapper').style.display = 'block';
+    var heroBack = document.querySelector('.hero-back-btn');
+    if (heroBack) heroBack.style.display = 'none';
+}
+
+// Hide navbar on initial load (hero is showing)
+window.addEventListener('DOMContentLoaded', function() {
+    setTimeout(function() {
+        var nav = document.querySelector('nav.navbar');
+        if (nav && document.getElementById('inputHero').style.display !== 'none') {
+            nav.style.display = 'none';
+        }
+    }, 50);
+});
+</script>
 
 </body>
 </html>
