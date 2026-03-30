@@ -235,4 +235,99 @@ router.delete('/saved-searches/:id', auth, async (req, res) => {
     }
 });
 
+/* ------------------------------------------------------------------ */
+/* GET /api/auth/profile  (protected) — full profile                   */
+/* ------------------------------------------------------------------ */
+router.get('/profile', auth, async (req, res) => {
+    try {
+        const result = await db.query(
+            `SELECT id, email, name, citizenship, marital_status, partner_citizenship,
+                    employment_status, income, flat_type, purchase_type, budget,
+                    loan_type, near_parents, parents_town, workplace_mrt, preferences
+             FROM users WHERE id = ?`,
+            [req.user.userId]
+        );
+        if (!result.rows.length) return res.status(404).json({ error: 'User not found' });
+        const u = result.rows[0];
+        if (u.preferences && typeof u.preferences === 'string') {
+            try { u.preferences = JSON.parse(u.preferences); } catch (_) {}
+        }
+        res.json(u);
+    } catch (err) {
+        console.error('get profile:', err.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+/* ------------------------------------------------------------------ */
+/* PATCH /api/auth/profile  (protected) — update profile fields        */
+/* ------------------------------------------------------------------ */
+router.patch('/profile', auth, async (req, res) => {
+    const allowed = [
+        'name', 'email', 'citizenship', 'marital_status', 'partner_citizenship',
+        'employment_status', 'income', 'flat_type', 'purchase_type', 'budget',
+        'loan_type', 'near_parents', 'parents_town', 'workplace_mrt', 'preferences'
+    ];
+    const updates = {};
+    for (const key of allowed) {
+        if (key in req.body) updates[key] = req.body[key];
+    }
+    if (Object.keys(updates).length === 0)
+        return res.status(400).json({ error: 'No valid fields to update' });
+
+    if ('preferences' in updates && typeof updates.preferences !== 'string') {
+        updates.preferences = JSON.stringify(updates.preferences);
+    }
+
+    const setClauses = Object.keys(updates).map(k => `${k} = ?`).join(', ');
+    const values     = [...Object.values(updates), req.user.userId];
+
+    try {
+        await db.query(`UPDATE users SET ${setClauses} WHERE id = ?`, values);
+        const result = await db.query(
+            'SELECT id, email, name, citizenship FROM users WHERE id = ?',
+            [req.user.userId]
+        );
+        const user = result.rows[0];
+        const response = { message: 'Profile updated' };
+        if ('email' in updates || 'name' in updates) {
+            response.token = signToken(user);
+            response.user  = safeUser(user);
+        }
+        res.json(response);
+    } catch (err) {
+        if (err.code === 'ER_DUP_ENTRY')
+            return res.status(409).json({ error: 'That email is already in use' });
+        console.error('patch profile:', err.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
+/* ------------------------------------------------------------------ */
+/* PATCH /api/auth/password  (protected) — change password             */
+/* ------------------------------------------------------------------ */
+router.patch('/password', auth, async (req, res) => {
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword)
+        return res.status(400).json({ error: 'Both current and new password are required' });
+    if (newPassword.length < 8)
+        return res.status(400).json({ error: 'New password must be at least 8 characters' });
+
+    try {
+        const result = await db.query(
+            'SELECT password_hash FROM users WHERE id = ?',
+            [req.user.userId]
+        );
+        const match = await bcrypt.compare(currentPassword, result.rows[0].password_hash);
+        if (!match) return res.status(401).json({ error: 'Current password is incorrect' });
+
+        const hash = await bcrypt.hash(newPassword, SALT_ROUNDS);
+        await db.query('UPDATE users SET password_hash = ? WHERE id = ?', [hash, req.user.userId]);
+        res.json({ message: 'Password changed successfully' });
+    } catch (err) {
+        console.error('patch password:', err.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router;

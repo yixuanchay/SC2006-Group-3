@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Houses — HomeMatch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background: #f5f4f2; font-family: 'DM Sans', 'Inter', sans-serif; }
+
+        .compare-page-label {
+            font-size: 0.78rem;
+            color: #b0a99f;
+            padding: 10px 0 0 48px;
+            letter-spacing: 0.03em;
+        }
+
+        .compare-container {
+            max-width: 1100px;
+            margin: 24px auto 60px;
+            padding: 0 48px;
+        }
+
+        /* ── Featured BTO card ── */
+        .featured-card {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #ece8e3;
+            display: flex;
+            gap: 0;
+            overflow: hidden;
+            margin-bottom: 40px;
+            min-height: 380px;
+        }
+
+        .featured-image {
+            width: 52%;
+            flex-shrink: 0;
+            background: #e8e4df;
+            overflow: hidden;
+        }
+        .featured-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .featured-info {
+            flex: 1;
+            padding: 36px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-info h2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0 0 24px;
+        }
+
+        .featured-info .info-block {
+            margin-bottom: 18px;
+        }
+        .featured-info .info-label {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+        .featured-info .info-value {
+            font-size: 0.88rem;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .save-btn {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #b39e8f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 28px;
+            transition: background 0.15s;
+        }
+        .save-btn:hover { background: #9a8578; }
+        .save-btn.saved { background: #6b7280; }
+
+        /* ── BTO grid ── */
+        .bto-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .bto-card {
+            background: #fff;
+            border-radius: 10px;
+            border: 1px solid #ece8e3;
+            overflow: hidden;
+            cursor: pointer;
+            transition: box-shadow 0.15s, border-color 0.15s;
+        }
+        .bto-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            border-color: #c9b9aa;
+        }
+        .bto-card.active {
+            border-color: #b39e8f;
+            box-shadow: 0 4px 16px rgba(179,158,143,0.25);
+        }
+
+        .bto-card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            background: #e8e4df;
+        }
+        .bto-card-img-placeholder {
+            width: 100%;
+            height: 180px;
+            background: #ddd8d2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 0.8rem;
+        }
+
+        .bto-card-body {
+            padding: 16px 18px 18px;
+        }
+        .bto-card-body h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 0 0 6px;
+        }
+        .bto-card-body .card-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 2px;
+        }
+        .bto-card-body .card-types {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        /* Coming soon banner */
+        .coming-soon-banner {
+            background: #f0ebe5;
+            border: 1px dashed #c9b9aa;
+            border-radius: 10px;
+            padding: 20px 24px;
+            text-align: center;
+            color: #8a7a6c;
+            font-size: 0.85rem;
+            margin-top: 32px;
+        }
+        .coming-soon-banner strong {
+            display: block;
+            font-size: 0.95rem;
+            color: #5a4a3c;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="navbar-slot"></div>
+
+<p class="compare-page-label">BTO Compare page</p>
+
+<div class="compare-container">
+
+    <!-- Featured BTO -->
+    <div class="featured-card" id="featuredCard">
+        <div class="featured-image">
+            <img id="featuredImg" src="images/hdb-screenshot.png" alt="BTO Site Plan">
+        </div>
+        <div class="featured-info">
+            <h2 id="featuredName">Sembawang BTO</h2>
+            <div class="info-block">
+                <div class="info-label">Flat Types</div>
+                <div class="info-value" id="featuredTypes">
+                    2-room<br>Flexi 3-room<br>4-room<br>5-room
+                </div>
+            </div>
+            <div class="info-block">
+                <div class="info-label">Price Range</div>
+                <div class="info-value" id="featuredPrice">SGD 155,000 to SGD 515,000</div>
+            </div>
+            <button class="save-btn" id="featuredSaveBtn" onclick="toggleSave()">Save</button>
+        </div>
+    </div>
+
+    <!-- BTO Grid -->
+    <div class="bto-grid" id="btoGrid"></div>
+
+    <!-- Coming soon note -->
+    <div class="coming-soon-banner">
+        <strong>Live HDB data coming soon</strong>
+        BTO listings will be automatically updated from HDB's API when new launches are released.
+    </div>
+
+</div>
+
+<script src="js/app.js"></script>
+<script>
+/* ── Placeholder BTO data ── */
+const BTO_DATA = [
+    {
+        id: 'woodlands',
+        name: 'Woodlands BTO',
+        flatTypes: ['2-room', 'Flexi 3-room', '4-room', '5-room'],
+        priceRange: 'SGD 130,000 to SGD 480,000',
+        image: 'images/hdb-building.png',
+        sitePlan: 'images/hdb-screenshot.png'
+    },
+    {
+        id: 'bukit-merah',
+        name: 'Bukit Merah BTO',
+        flatTypes: ['2-room Flexi', '3-room', '4-room'],
+        priceRange: 'SGD 195,000 to SGD 620,000',
+        image: 'images/hdb-building.png',
+        sitePlan: 'images/hdb-screenshot.png'
+    },
+    {
+        id: 'ang-mo-kio',
+        name: 'Ang Mo Kio BTO',
+        flatTypes: ['3-room', '4-room'],
+        priceRange: 'SGD 210,000 to SGD 550,000',
+        image: 'images/hdb-building.png',
+        sitePlan: 'images/hdb-screenshot.png'
+    },
+    {
+        id: 'sembawang',
+        name: 'Sembawang BTO',
+        flatTypes: ['2-room', 'Flexi 3-room', '4-room', '5-room', '3Gen'],
+        priceRange: 'SGD 155,000 to SGD 515,000',
+        image: 'images/hdb-building.png',
+        sitePlan: 'images/hdb-screenshot.png'
+    }
+];
+
+let currentId  = 'sembawang';
+let savedSet   = new Set(JSON.parse(localStorage.getItem('hm_saved_bto') || '[]'));
+
+/* ── Render grid ── */
+function renderGrid() {
+    const grid = document.getElementById('btoGrid');
+    grid.innerHTML = BTO_DATA.map(bto => `
+        <div class="bto-card ${bto.id === currentId ? 'active' : ''}"
+             id="card-${bto.id}" onclick="selectBTO('${bto.id}')">
+            <img class="bto-card-img" src="${bto.image}"
+                 alt="${bto.name}" onerror="this.style.display='none'">
+            <div class="bto-card-body">
+                <h3>${bto.name}</h3>
+                <div class="card-label">Available Flat Types:</div>
+                <div class="card-types">${bto.flatTypes.join(', ')}</div>
+            </div>
+        </div>
+    `).join('');
+}
+
+/* ── Select a BTO → update featured panel ── */
+function selectBTO(id) {
+    const bto = BTO_DATA.find(b => b.id === id);
+    if (!bto) return;
+    currentId = id;
+
+    document.getElementById('featuredName').textContent  = bto.name;
+    document.getElementById('featuredPrice').textContent = bto.priceRange;
+    document.getElementById('featuredImg').src           = bto.sitePlan;
+    document.getElementById('featuredTypes').innerHTML   =
+        bto.flatTypes.join('<br>');
+
+    // Update save button state
+    const btn = document.getElementById('featuredSaveBtn');
+    btn.textContent = savedSet.has(id) ? 'Saved ✓' : 'Save';
+    btn.classList.toggle('saved', savedSet.has(id));
+
+    renderGrid();
+}
+
+/* ── Save / unsave ── */
+function toggleSave() {
+    if (savedSet.has(currentId)) {
+        savedSet.delete(currentId);
+    } else {
+        savedSet.add(currentId);
+    }
+    localStorage.setItem('hm_saved_bto', JSON.stringify([...savedSet]));
+    const btn = document.getElementById('featuredSaveBtn');
+    btn.textContent = savedSet.has(currentId) ? 'Saved ✓' : 'Save';
+    btn.classList.toggle('saved', savedSet.has(currentId));
+}
+
+/* ── Init ── */
+renderGrid();
+selectBTO('sembawang');
+</script>
+</body>
+</html>
