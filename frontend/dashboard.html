@@ -75,17 +75,18 @@
         }
 
         container.innerHTML = searches.map(s => {
-            const d = new Date(s.created_at);
-            const fd = s.form_data;
+            const d  = new Date(s.created_at);
+            const fd = s.form_data || {};
             const label = s.name || `Search on ${d.toLocaleDateString('en-SG')}`;
+            const encoded = JSON.stringify(fd).replace(/"/g, '&quot;');
             return `
-            <div class="result-card" style="margin-bottom:12px;">
+            <div class="result-card" data-id="${s.id}" data-form-data="${encoded}" style="margin-bottom:12px;">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                     <div>
                         <strong>${label}</strong>
                         <p style="margin:4px 0 0; font-size:.85rem; color:var(--color-text-muted);">
-                            ${fd?.flatType || '—'} · ${fd?.purchaseType || '—'} ·
-                            Income $${Number(fd?.income || 0).toLocaleString()}/mo
+                            ${fd.flatType || '—'} · ${fd.purchaseType || '—'} ·
+                            Income $${Number(fd.income || 0).toLocaleString()}/mo
                         </p>
                     </div>
                     <div style="display:flex; gap:8px;">
@@ -100,13 +101,28 @@
     }
 })();
 
+function loadSearch(id) {
+    // Find the search in the already-rendered list by scanning cards
+    // The form_data is embedded as a data attribute on the card
+    const card = document.querySelector(`.result-card[data-id="${id}"]`);
+    if (card && card.dataset.formData) {
+        sessionStorage.setItem('homematchData', card.dataset.formData);
+        window.location.href = 'results.html';
+    }
+}
+
 async function deleteSearch(id, btn) {
     const token = localStorage.getItem('hm_token');
     const API   = window.HM_API || 'http://localhost:3001';
     btn.disabled = true;
     btn.textContent = '…';
-    await fetch(`${API}/api/auth/saved-searches/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
-    btn.closest('.result-card').remove();
+    try {
+        await fetch(`${API}/api/auth/saved-searches/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
+        btn.closest('.result-card').remove();
+    } catch {
+        btn.disabled = false;
+        btn.textContent = 'Delete';
+    }
 }
 </script>
 </body>

@@ -6,6 +6,32 @@ dotenv.config();
 
 const app = express();
 
+/* ---- Auto-migrate new profile columns ---- */
+(async function migrate() {
+    const db = require('./models/db');
+    const cols = [
+        ['marital_status',      'VARCHAR(20)'],
+        ['partner_citizenship', 'VARCHAR(10)'],
+        ['employment_status',   'VARCHAR(50)'],
+        ['income',              'DECIMAL(10,2)'],
+        ['flat_type',           'VARCHAR(20)'],
+        ['purchase_type',       'VARCHAR(20)'],
+        ['budget',              'DECIMAL(10,2)'],
+        ['loan_type',           'VARCHAR(20)'],
+        ['near_parents',        'TINYINT(1)'],
+        ['parents_town',        'VARCHAR(100)'],
+        ['workplace_mrt',       'VARCHAR(100)'],
+        ['preferences',         'JSON'],
+    ];
+    for (const [col, type] of cols) {
+        try {
+            await db.query(`ALTER TABLE users ADD COLUMN ${col} ${type}`);
+        } catch (e) {
+            if (e.code !== 'ER_DUP_FIELDNAME') console.warn('migrate:', e.message);
+        }
+    }
+}());
+
 app.use(cors({
     origin: process.env.FRONTEND_URL || '*',
     credentials: true

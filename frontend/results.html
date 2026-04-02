@@ -16,7 +16,11 @@
 
 <div class="results-container">
 
-    <h2>Recommended Locations</h2>
+    <div class="results-header">
+        <button class="back-to-form" onclick="window.location.href='input.html'">← Refine Preferences</button>
+        <h2>Recommended Locations</h2>
+        <p class="results-subtitle" id="resultsSubtitle"></p>
+    </div>
 
     <!-- LOADING STATE -->
     <div id="loadingState" class="loading-state" style="display: flex;">
@@ -100,6 +104,17 @@
 
     </div>
 
+</div>
+
+<!-- Floating Compare Bar -->
+<div class="compare-bar" id="compareBar">
+    <div class="compare-bar-left">
+        <span class="compare-bar-label">Compare:</span>
+        <div class="compare-bar-towns" id="compareBarTowns"></div>
+    </div>
+    <button class="compare-bar-btn" id="compareBarBtn" onclick="goToComparePage()">
+        Select 2 locations to compare
+    </button>
 </div>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

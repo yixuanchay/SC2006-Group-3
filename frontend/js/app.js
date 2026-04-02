@@ -220,8 +220,35 @@ function refreshNavbar() {
     if (!target) return;
 
     const loggedIn = isLoggedIn();
+    const user     = getUser();
+    const username = (user && user.name) ? user.name : '';
 
-    const navHTML = `
+    let navHTML;
+
+    if (loggedIn) {
+        navHTML = `
+        <nav class="navbar navbar-dashboard">
+            <div class="logo" onclick="goHome()" style="cursor:pointer;">
+                <img src="images/HomeMatch Logo.png" alt="HomeMatch" class="logo-img">
+            </div>
+            <div class="navbar-center">
+                <a class="navbar-link" href="index.html">Home</a>
+                <a class="navbar-link" href="compare.html">Compare Houses</a>
+                <a class="navbar-link" href="dashboard.html#saved">Saved</a>
+            </div>
+            <div class="navbar-actions">
+                <a class="navbar-profile" href="profile.html" title="My Profile">
+                    <svg class="profile-avatar-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="11" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="8.5" r="3.5" fill="currentColor"/>
+                        <path d="M4.5 20c0-3.59 3.36-6.5 7.5-6.5s7.5 2.91 7.5 6.5" fill="currentColor"/>
+                    </svg>
+                    ${username ? `<span class="profile-name">${username}</span>` : ''}
+                </a>
+            </div>
+        </nav>`;
+    } else {
+        navHTML = `
         <nav class="navbar">
             <div class="logo" onclick="goHome()" style="cursor:pointer;">
                 <img src="images/HomeMatch Logo.png" alt="HomeMatch" class="logo-img">
@@ -232,15 +259,11 @@ function refreshNavbar() {
                 <a class="navbar-link" href="index.html#features">Features</a>
             </div>
             <div class="navbar-actions">
-                ${loggedIn ? `
-                    <a class="navbar-link" href="dashboard.html">Dashboard</a>
-                    <button class="nav-btn nav-btn-logout" onclick="handleLogout()">Log Out</button>
-                ` : `
-                    <button class="nav-btn nav-btn-login" onclick="openModal('login')">Log In</button>
-                    <button class="nav-btn nav-btn-signup" onclick="openModal('register')">Sign Up</button>
-                `}
+                <button class="nav-btn nav-btn-login" onclick="openModal('login')">Log In</button>
+                <button class="nav-btn nav-btn-signup" onclick="openModal('register')">Sign Up</button>
             </div>
         </nav>`;
+    }
 
     if (existing) {
         existing.outerHTML = navHTML;

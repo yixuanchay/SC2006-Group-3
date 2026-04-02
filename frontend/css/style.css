@@ -69,11 +69,11 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 14px 48px;
+    padding: 0 48px;
     background: #fff;
     border-bottom: 1px solid var(--color-border-light);
-    max-height: 72px;
-    overflow: hidden;
+    height: 64px;
+    overflow: visible;
 }
 
 .logo {
@@ -86,9 +86,9 @@ body {
 
 .logo img,
 .logo-img {
-    height: 90px;
+    height: 44px;
     width: auto;
-    max-height: 90px;
+    max-height: 44px;
     object-fit: contain;
     display: block;
 }
@@ -107,6 +107,9 @@ body {
 }
 
 .navbar-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -153,6 +156,40 @@ body {
 
 .nav-btn-logout:hover {
     background: #dc2626;
+}
+
+/* Profile avatar in logged-in navbar */
+.navbar-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    text-decoration: none;
+    color: var(--color-text);
+    cursor: pointer;
+    transition: opacity var(--transition);
+}
+
+.navbar-profile:hover {
+    opacity: 0.75;
+}
+
+.profile-avatar-icon {
+    width: 36px;
+    height: 36px;
+    color: var(--color-text);
+}
+
+.profile-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--color-text);
+    line-height: 1;
+    max-width: 72px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
 }
 
 /* Keep old home-btn for backward compat */

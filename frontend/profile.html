@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile — HomeMatch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body { background: #f5f4f2; font-family: 'DM Sans', 'Inter', sans-serif; }
+
+        .profile-page-label {
+            font-size: 0.78rem;
+            color: #b0a99f;
+            padding: 10px 0 0 48px;
+            letter-spacing: 0.03em;
+        }
+
+        /* Banner */
+        .profile-banner {
+            background: #e8d5bf;
+            padding: 32px 48px;
+            margin-bottom: 0;
+        }
+        .profile-banner h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.6rem;
+            font-weight: 700;
+            margin: 0;
+            color: #1a1a1a;
+        }
+
+        /* Layout */
+        .profile-body {
+            display: flex;
+            gap: 32px;
+            max-width: 1100px;
+            margin: 32px auto;
+            padding: 0 48px 48px;
+            align-items: flex-start;
+        }
+
+        /* Sidebar */
+        .profile-sidebar {
+            width: 260px;
+            flex-shrink: 0;
+            background: #fff;
+            border-radius: 10px;
+            padding: 24px 0;
+            border: 1px solid #ece8e3;
+        }
+        .profile-sidebar h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 0 0 16px;
+            padding: 0 24px;
+        }
+        .sidebar-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 24px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            color: #a09488;
+            transition: background 0.15s;
+            text-transform: uppercase;
+        }
+        .sidebar-item:hover { background: #faf8f6; }
+        .sidebar-item.active { color: #1a1a1a; font-weight: 700; background: #faf8f6; }
+        .sidebar-item .arrow { font-size: 0.9rem; color: #aaa; }
+        .sidebar-item.active .arrow { color: #555; }
+
+        /* Content panel */
+        .profile-content { flex: 1; min-width: 0; }
+
+        .profile-section { display: none; }
+        .profile-section.active { display: block; }
+
+        .profile-content h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0 0 6px;
+            color: #1a1a1a;
+        }
+        .profile-content .section-subtitle {
+            color: #888;
+            font-size: 0.9rem;
+            margin: 0 0 32px;
+        }
+        .profile-content h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 32px 0 16px;
+            color: #1a1a1a;
+        }
+
+        /* Field rows */
+        .profile-field { margin-bottom: 20px; }
+        .profile-field label {
+            display: block;
+            font-size: 0.85rem;
+            color: #555;
+            margin-bottom: 6px;
+        }
+        .field-row {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .profile-field input,
+        .profile-field select {
+            width: 100%;
+            max-width: 520px;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            color: #333;
+            background: #fff;
+            transition: border 0.15s;
+        }
+        .profile-field input:focus,
+        .profile-field select:focus {
+            outline: none;
+            border-color: #b39e8f;
+        }
+        .profile-field input:read-only,
+        .profile-field select:disabled {
+            background: #f9f9f9;
+            color: #444;
+            cursor: default;
+        }
+
+        .edit-btn {
+            display: inline-block;
+            padding: 7px 22px;
+            background: #a09080;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s;
+            align-self: flex-start;
+        }
+        .edit-btn:hover { background: #8a7a6c; }
+        .edit-btn.saving { background: #6b7280; }
+
+        .field-msg {
+            font-size: 0.8rem;
+            margin-top: 4px;
+            display: none;
+        }
+        .field-msg.success { color: #16a34a; display: block; }
+        .field-msg.error   { color: #dc2626; display: block; }
+
+        /* Password field */
+        .password-display {
+            width: 100%;
+            max-width: 520px;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: #333;
+            background: #f9f9f9;
+            letter-spacing: 0.12em;
+        }
+        .password-change-form { display: none; max-width: 520px; }
+        .password-change-form input {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            margin-bottom: 10px;
+        }
+        .password-change-form input:focus { outline: none; border-color: #b39e8f; }
+
+        /* Preferences */
+        .pref-list { list-style: none; margin: 0; padding: 0; max-width: 520px; }
+        .pref-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border: 1px solid #e0dbd5;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background: #fff;
+            cursor: grab;
+            user-select: none;
+        }
+        .pref-item.drag-over { border-color: #b39e8f; background: #faf6f2; }
+        .pref-rank {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #555;
+            width: 20px;
+            flex-shrink: 0;
+        }
+        .pref-icon img { width: 24px; height: 24px; object-fit: contain; display: block; }
+        .pref-label { flex: 1; font-size: 0.9rem; color: #333; }
+        .pref-move-btns { display: flex; flex-direction: column; gap: 2px; }
+        .pref-move-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.75rem;
+            color: #999;
+            padding: 2px 4px;
+            line-height: 1;
+        }
+        .pref-move-btn:hover { color: #555; }
+        .pref-move-btn:disabled { opacity: 0.3; cursor: default; }
+
+        .pref-actions { display: flex; justify-content: flex-end; max-width: 520px; margin-top: 16px; }
+
+        /* Recalculate section */
+        .recalc-box {
+            background: #fff;
+            border: 1px solid #e0dbd5;
+            border-radius: 10px;
+            padding: 24px;
+            max-width: 520px;
+            margin-top: 8px;
+        }
+        .recalc-box p { margin: 0 0 16px; color: #666; font-size: 0.9rem; }
+        .recalc-btn {
+            padding: 9px 24px;
+            background: #a09080;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .recalc-btn:hover { background: #8a7a6c; }
+
+        .divider { border: none; border-top: 1px solid #ece8e3; margin: 28px 0; }
+    </style>
+</head>
+<body>
+
+<div id="navbar-slot"></div>
+
+<p class="profile-page-label">Personal Dashboard</p>
+
+<!-- Banner -->
+<div class="profile-banner">
+    <h1>Hi, <span id="bannerName"></span>.</h1>
+</div>
+
+<!-- Main layout -->
+<div class="profile-body">
+
+    <!-- Sidebar -->
+    <aside class="profile-sidebar">
+        <h3>Account Overview</h3>
+        <div class="sidebar-item active" onclick="showSection('login')" id="tab-login">
+            <span>LOGIN DETAILS</span><span class="arrow">›</span>
+        </div>
+        <div class="sidebar-item" onclick="showSection('personal')" id="tab-personal">
+            <span>PERSONAL INFORMATION</span><span class="arrow">›</span>
+        </div>
+        <div class="sidebar-item" onclick="showSection('financial')" id="tab-financial">
+            <span>FINANCIAL INFORMATION</span><span class="arrow">›</span>
+        </div>
+        <div class="sidebar-item" onclick="showSection('preferences')" id="tab-preferences">
+            <span>PREFERENCES</span><span class="arrow">›</span>
+        </div>
+    </aside>
+
+    <!-- Content -->
+    <main class="profile-content">
+        <h2>My Details</h2>
+        <p class="section-subtitle">Feel free to edit any of your details below so your account is up to date.</p>
+
+        <!-- ── LOGIN DETAILS ── -->
+        <section class="profile-section active" id="section-login">
+            <h3>LogIn Details</h3>
+
+            <!-- Username -->
+            <div class="profile-field">
+                <label>Username</label>
+                <div class="field-row">
+                    <input type="text" id="field-name" readonly placeholder="—">
+                    <button class="edit-btn" onclick="toggleEdit('name')">Edit</button>
+                    <span class="field-msg" id="msg-name"></span>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Email -->
+            <div class="profile-field">
+                <label>Email address</label>
+                <div class="field-row">
+                    <input type="email" id="field-email" readonly placeholder="—">
+                    <button class="edit-btn" onclick="toggleEdit('email')">Edit</button>
+                    <span class="field-msg" id="msg-email"></span>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <!-- Password -->
+            <div class="profile-field">
+                <label>Password</label>
+                <div class="field-row">
+                    <div class="password-display">••••••••••••••</div>
+                    <button class="edit-btn" id="btn-password" onclick="togglePasswordForm()">Edit</button>
+                    <div class="password-change-form" id="passwordForm">
+                        <input type="password" id="currentPassword" placeholder="Current password">
+                        <input type="password" id="newPassword" placeholder="New password (min 8 chars)">
+                        <input type="password" id="confirmPassword" placeholder="Confirm new password">
+                        <button class="edit-btn" onclick="savePassword()">Save Password</button>
+                        <button class="edit-btn" style="background:#aaa;margin-left:8px;" onclick="togglePasswordForm()">Cancel</button>
+                    </div>
+                    <span class="field-msg" id="msg-password"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── PERSONAL INFORMATION ── -->
+        <section class="profile-section" id="section-personal">
+            <h3>Personal Information</h3>
+
+            <div class="profile-field">
+                <label>Citizenship Status</label>
+                <div class="field-row">
+                    <select id="field-citizenship" disabled>
+                        <option value="">— Select —</option>
+                        <option value="sc">Singapore Citizen</option>
+                        <option value="pr">Permanent Resident</option>
+                        <option value="foreigner">Foreigner</option>
+                    </select>
+                    <button class="edit-btn" onclick="toggleEdit('citizenship')">Edit</button>
+                    <span class="field-msg" id="msg-citizenship"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Marital Status</label>
+                <div class="field-row">
+                    <select id="field-marital_status" disabled>
+                        <option value="">— Select —</option>
+                        <option value="single">Single</option>
+                        <option value="married">Married</option>
+                    </select>
+                    <button class="edit-btn" onclick="toggleEdit('marital_status')">Edit</button>
+                    <span class="field-msg" id="msg-marital_status"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Spouse Citizenship Status</label>
+                <div class="field-row">
+                    <select id="field-partner_citizenship" disabled>
+                        <option value="">— Select —</option>
+                        <option value="sc">Singapore Citizen</option>
+                        <option value="pr">Permanent Resident</option>
+                        <option value="foreigner">Foreigner</option>
+                    </select>
+                    <button class="edit-btn" onclick="toggleEdit('partner_citizenship')">Edit</button>
+                    <span class="field-msg" id="msg-partner_citizenship"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Employment Status</label>
+                <div class="field-row">
+                    <select id="field-employment_status" disabled>
+                        <option value="">— Select —</option>
+                        <option value="employed">Employed</option>
+                        <option value="self-employed">Self-Employed</option>
+                        <option value="unemployed">Unemployed</option>
+                        <option value="student">Student</option>
+                    </select>
+                    <button class="edit-btn" onclick="toggleEdit('employment_status')">Edit</button>
+                    <span class="field-msg" id="msg-employment_status"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Average Household Income (SGD / month)</label>
+                <div class="field-row">
+                    <input type="number" id="field-income" readonly placeholder="e.g. 7000" min="0">
+                    <button class="edit-btn" onclick="toggleEdit('income')">Edit</button>
+                    <span class="field-msg" id="msg-income"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Preferred Flat Type</label>
+                <div class="field-row">
+                    <select id="field-flat_type" disabled>
+                        <option value="">— Select —</option>
+                        <option value="2-room">2-Room Flexi</option>
+                        <option value="3-room">3-Room</option>
+                        <option value="4-room">4-Room</option>
+                        <option value="5-room">5-Room</option>
+                    </select>
+                    <button class="edit-btn" onclick="toggleEdit('flat_type')">Edit</button>
+                    <span class="field-msg" id="msg-flat_type"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ── FINANCIAL INFORMATION ── -->
+        <section class="profile-section" id="section-financial">
+            <h3>Financial Information</h3>
+
+            <div class="profile-field">
+                <label>Purchase Type</label>
+                <div class="field-row">
+                    <select id="field-purchase_type" disabled>
+                        <option value="">— Select —</option>
+                        <option value="bto">BTO</option>
+                        <option value="resale">Resale</option>
+                    </select>
+                    <button class="edit-btn" onclick="toggleEdit('purchase_type')">Edit</button>
+                    <span class="field-msg" id="msg-purchase_type"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Housing Budget – Maximum Price (SGD)</label>
+                <div class="field-row">
+                    <input type="number" id="field-budget" readonly placeholder="e.g. 900000" min="0">
+                    <button class="edit-btn" onclick="toggleEdit('budget')">Edit</button>
+                    <span class="field-msg" id="msg-budget"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Loan Type</label>
+                <div class="field-row">
+                    <select id="field-loan_type" disabled>
+                        <option value="">— Select —</option>
+                        <option value="hdb">HDB Loan</option>
+                        <option value="bank">Bank Loan</option>
+                    </select>
+                    <button class="edit-btn" onclick="toggleEdit('loan_type')">Edit</button>
+                    <span class="field-msg" id="msg-loan_type"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Do you want to live near your parents?</label>
+                <div class="field-row">
+                    <select id="field-near_parents" disabled>
+                        <option value="">— Select —</option>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                    <button class="edit-btn" onclick="toggleEdit('near_parents')">Edit</button>
+                    <span class="field-msg" id="msg-near_parents"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Parent's Location (MRT / Town)</label>
+                <div class="field-row">
+                    <input type="text" id="field-parents_town" readonly placeholder="e.g. Ang Mo Kio">
+                    <button class="edit-btn" onclick="toggleEdit('parents_town')">Edit</button>
+                    <span class="field-msg" id="msg-parents_town"></span>
+                </div>
+            </div>
+
+            <div class="profile-field">
+                <label>Workplace Location (MRT)</label>
+                <div class="field-row">
+                    <input type="text" id="field-workplace_mrt" readonly placeholder="e.g. Raffles Place">
+                    <button class="edit-btn" onclick="toggleEdit('workplace_mrt')">Edit</button>
+                    <span class="field-msg" id="msg-workplace_mrt"></span>
+                </div>
+            </div>
+
+            <hr class="divider">
+
+            <h3>Recalculate</h3>
+            <div class="recalc-box">
+                <p>Recalculate your estimated financial plan</p>
+                <button class="recalc-btn" onclick="recalculate()">Recalculate</button>
+            </div>
+        </section>
+
+        <!-- ── PREFERENCES ── -->
+        <section class="profile-section" id="section-preferences">
+            <h3>Preferences</h3>
+            <ul class="pref-list" id="prefList">
+                <li class="pref-item" data-factor="mrt">
+                    <span class="pref-rank">1</span>
+                    <span class="pref-icon"><img src="images/Train Icon.png" alt="MRT"></span>
+                    <span class="pref-label">MRT Accessibility</span>
+                    <div class="pref-move-btns">
+                        <button class="pref-move-btn" onclick="movePref(this,-1)">▲</button>
+                        <button class="pref-move-btn" onclick="movePref(this,1)">▼</button>
+                    </div>
+                </li>
+                <li class="pref-item" data-factor="schools">
+                    <span class="pref-rank">2</span>
+                    <span class="pref-icon"><img src="images/School Icon.png" alt="Schools"></span>
+                    <span class="pref-label">Schools Nearby</span>
+                    <div class="pref-move-btns">
+                        <button class="pref-move-btn" onclick="movePref(this,-1)">▲</button>
+                        <button class="pref-move-btn" onclick="movePref(this,1)">▼</button>
+                    </div>
+                </li>
+                <li class="pref-item" data-factor="parks">
+                    <span class="pref-rank">3</span>
+                    <span class="pref-icon"><img src="images/Nature Icon.png" alt="Parks"></span>
+                    <span class="pref-label">Parks &amp; Recreation</span>
+                    <div class="pref-move-btns">
+                        <button class="pref-move-btn" onclick="movePref(this,-1)">▲</button>
+                        <button class="pref-move-btn" onclick="movePref(this,1)">▼</button>
+                    </div>
+                </li>
+                <li class="pref-item" data-factor="malls">
+                    <span class="pref-rank">4</span>
+                    <span class="pref-icon"><img src="images/Mall Icon.png" alt="Malls"></span>
+                    <span class="pref-label">Shopping Malls</span>
+                    <div class="pref-move-btns">
+                        <button class="pref-move-btn" onclick="movePref(this,-1)">▲</button>
+                        <button class="pref-move-btn" onclick="movePref(this,1)">▼</button>
+                    </div>
+                </li>
+                <li class="pref-item" data-factor="supermarkets">
+                    <span class="pref-rank">5</span>
+                    <span class="pref-icon"><img src="images/Grocery Cart Icon.png" alt="Supermarkets"></span>
+                    <span class="pref-label">Near Supermarkets</span>
+                    <div class="pref-move-btns">
+                        <button class="pref-move-btn" onclick="movePref(this,-1)">▲</button>
+                        <button class="pref-move-btn" onclick="movePref(this,1)">▼</button>
+                    </div>
+                </li>
+                <li class="pref-item" data-factor="community">
+                    <span class="pref-rank">6</span>
+                    <span class="pref-icon"><img src="images/Sport Icon.png" alt="Sports"></span>
+                    <span class="pref-label">Community Clubs / Sport Centres</span>
+                    <div class="pref-move-btns">
+                        <button class="pref-move-btn" onclick="movePref(this,-1)">▲</button>
+                        <button class="pref-move-btn" onclick="movePref(this,1)">▼</button>
+                    </div>
+                </li>
+                <li class="pref-item" data-factor="parents">
+                    <span class="pref-rank">7</span>
+                    <span class="pref-icon"><img src="images/Parents Icon.png" alt="Parents"></span>
+                    <span class="pref-label">Near Parents</span>
+                    <div class="pref-move-btns">
+                        <button class="pref-move-btn" onclick="movePref(this,-1)">▲</button>
+                        <button class="pref-move-btn" onclick="movePref(this,1)">▼</button>
+                    </div>
+                </li>
+                <li class="pref-item" data-factor="commute">
+                    <span class="pref-rank">8</span>
+                    <span class="pref-icon"><img src="images/Work Suitcase Icon.png" alt="Workplace"></span>
+                    <span class="pref-label">Near Workplace</span>
+                    <div class="pref-move-btns">
+                        <button class="pref-move-btn" onclick="movePref(this,-1)">▲</button>
+                        <button class="pref-move-btn" onclick="movePref(this,1)">▼</button>
+                    </div>
+                </li>
+            </ul>
+            <div class="pref-actions">
+                <button class="edit-btn" id="btn-prefs" onclick="savePreferences()">Edit</button>
+                <span class="field-msg" id="msg-preferences" style="margin-left:12px;align-self:center;"></span>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="js/app.js"></script>
+<script>
+const API = window.HM_API || 'http://localhost:3001';
+let profile = {};
+let prefEditing = false;
+
+/* ── Sidebar navigation ── */
+function showSection(name) {
+    document.querySelectorAll('.profile-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+    document.getElementById('section-' + name).classList.add('active');
+    document.getElementById('tab-' + name).classList.add('active');
+}
+
+/* ── Load profile from API ── */
+async function loadProfile() {
+    const token = localStorage.getItem('hm_token');
+    if (!token) { window.location.href = 'index.html'; return; }
+
+    try {
+        const res = await fetch(`${API}/api/auth/profile`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        if (!res.ok) { window.location.href = 'index.html'; return; }
+        profile = await res.json();
+        populateFields();
+    } catch {
+        alert('Could not load profile. Is the backend running?');
+    }
+}
+
+function populateFields() {
+    // Banner
+    document.getElementById('bannerName').textContent = profile.name || '';
+
+    // Login details
+    setField('name',  profile.name  || '');
+    setField('email', profile.email || '');
+
+    // Personal
+    setSelect('citizenship',        profile.citizenship        || '');
+    setSelect('marital_status',     profile.marital_status     || '');
+    setSelect('partner_citizenship',profile.partner_citizenship|| '');
+    setSelect('employment_status',  profile.employment_status  || '');
+    setField('income',              profile.income != null ? profile.income : '');
+    setSelect('flat_type',          profile.flat_type          || '');
+
+    // Financial
+    setSelect('purchase_type',  profile.purchase_type  || '');
+    setField('budget',          profile.budget != null ? profile.budget : '');
+    setSelect('loan_type',      profile.loan_type      || '');
+    setSelect('near_parents',   profile.near_parents != null ? String(profile.near_parents) : '');
+    setField('parents_town',    profile.parents_town   || '');
+    setField('workplace_mrt',   profile.workplace_mrt  || '');
+
+    // Preferences — reorder list if saved
+    if (Array.isArray(profile.preferences) && profile.preferences.length) {
+        const list = document.getElementById('prefList');
+        const items = [...list.querySelectorAll('.pref-item')];
+        profile.preferences.forEach((pref, i) => {
+            const item = items.find(el => el.dataset.factor === pref.factor);
+            if (item) list.appendChild(item);
+        });
+        updatePrefRanks();
+    }
+    updatePrefMoveBtns();
+}
+
+function setField(key, val) {
+    const el = document.getElementById('field-' + key);
+    if (el) el.value = val;
+}
+
+function setSelect(key, val) {
+    const el = document.getElementById('field-' + key);
+    if (el) el.value = val;
+}
+
+/* ── Inline Edit / Save toggle ── */
+function toggleEdit(key) {
+    const el  = document.getElementById('field-' + key);
+    const btn = el.closest('.field-row').querySelector('.edit-btn');
+    const msg = document.getElementById('msg-' + key);
+
+    const isSelect = el.tagName === 'SELECT';
+    const isEditing = isSelect ? !el.disabled : !el.readOnly;
+
+    if (!isEditing) {
+        // Enter edit mode
+        if (isSelect) el.disabled = false;
+        else          el.readOnly = false;
+        el.focus();
+        btn.textContent = 'Save';
+        if (msg) { msg.textContent = ''; msg.className = 'field-msg'; }
+    } else {
+        // Save
+        saveField(key);
+    }
+}
+
+async function saveField(key) {
+    const el  = document.getElementById('field-' + key);
+    const btn = el.closest('.field-row').querySelector('.edit-btn');
+    const msg = document.getElementById('msg-' + key);
+    const token = localStorage.getItem('hm_token');
+
+    btn.textContent = 'Saving…';
+    btn.classList.add('saving');
+
+    try {
+        const body = { [key]: el.value };
+        const res  = await fetch(`${API}/api/auth/profile`, {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body:    JSON.stringify(body)
+        });
+        const data = await res.json();
+
+        if (!res.ok) {
+            showMsg(msg, data.error || 'Save failed', 'error');
+        } else {
+            // Update token if name/email changed
+            if (data.token) {
+                localStorage.setItem('hm_token', data.token);
+                localStorage.setItem('hm_user', JSON.stringify(data.user));
+                refreshNavbar();
+            }
+            profile[key] = el.value;
+            if (key === 'name') document.getElementById('bannerName').textContent = el.value;
+
+            // Lock field
+            const isSelect = el.tagName === 'SELECT';
+            if (isSelect) el.disabled = true;
+            else          el.readOnly = true;
+            showMsg(msg, 'Saved!', 'success');
+            setTimeout(() => { msg.className = 'field-msg'; msg.textContent = ''; }, 2000);
+        }
+    } catch {
+        showMsg(msg, 'Network error', 'error');
+    }
+
+    btn.textContent = 'Edit';
+    btn.classList.remove('saving');
+}
+
+/* ── Password ── */
+function togglePasswordForm() {
+    const form = document.getElementById('passwordForm');
+    const btn  = document.getElementById('btn-password');
+    const showing = form.style.display === 'block';
+    form.style.display = showing ? 'none' : 'block';
+    btn.textContent = showing ? 'Edit' : 'Cancel';
+    if (!showing) {
+        document.getElementById('currentPassword').value = '';
+        document.getElementById('newPassword').value = '';
+        document.getElementById('confirmPassword').value = '';
+        const msg = document.getElementById('msg-password');
+        msg.className = 'field-msg'; msg.textContent = '';
+    }
+}
+
+async function savePassword() {
+    const current  = document.getElementById('currentPassword').value;
+    const newPw    = document.getElementById('newPassword').value;
+    const confirm  = document.getElementById('confirmPassword').value;
+    const msg      = document.getElementById('msg-password');
+    const token    = localStorage.getItem('hm_token');
+
+    if (newPw !== confirm) { showMsg(msg, 'Passwords do not match', 'error'); return; }
+    if (newPw.length < 8)  { showMsg(msg, 'Password must be at least 8 characters', 'error'); return; }
+
+    try {
+        const res  = await fetch(`${API}/api/auth/password`, {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body:    JSON.stringify({ currentPassword: current, newPassword: newPw })
+        });
+        const data = await res.json();
+        if (!res.ok) { showMsg(msg, data.error || 'Failed', 'error'); return; }
+        showMsg(msg, 'Password changed successfully!', 'success');
+        togglePasswordForm();
+    } catch {
+        showMsg(msg, 'Network error', 'error');
+    }
+}
+
+/* ── Preferences ── */
+function movePref(btn, direction) {
+    const item = btn.closest('.pref-item');
+    if (direction === -1 && item.previousElementSibling) {
+        item.previousElementSibling.before(item);
+    } else if (direction === 1 && item.nextElementSibling) {
+        item.nextElementSibling.after(item);
+    }
+    updatePrefRanks();
+    updatePrefMoveBtns();
+}
+
+function updatePrefRanks() {
+    document.querySelectorAll('#prefList .pref-item').forEach((item, i) => {
+        item.querySelector('.pref-rank').textContent = i + 1;
+    });
+}
+
+function updatePrefMoveBtns() {
+    const items = document.querySelectorAll('#prefList .pref-item');
+    items.forEach((item, i) => {
+        const [up, down] = item.querySelectorAll('.pref-move-btn');
+        if (up)   up.disabled   = i === 0;
+        if (down) down.disabled = i === items.length - 1;
+    });
+}
+
+async function savePreferences() {
+    const btn   = document.getElementById('btn-prefs');
+    const msg   = document.getElementById('msg-preferences');
+    const token = localStorage.getItem('hm_token');
+    const items = document.querySelectorAll('#prefList .pref-item');
+
+    const preferences = [...items].map((item, i) => ({
+        factor: item.dataset.factor,
+        label:  item.querySelector('.pref-label').textContent,
+        weight: items.length - i
+    }));
+
+    btn.textContent = 'Saving…';
+    try {
+        const res  = await fetch(`${API}/api/auth/profile`, {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+            body:    JSON.stringify({ preferences })
+        });
+        const data = await res.json();
+        if (!res.ok) { showMsg(msg, data.error || 'Save failed', 'error'); }
+        else {
+            profile.preferences = preferences;
+            showMsg(msg, 'Preferences saved!', 'success');
+            setTimeout(() => { msg.className = 'field-msg'; msg.textContent = ''; }, 2000);
+        }
+    } catch {
+        showMsg(msg, 'Network error', 'error');
+    }
+    btn.textContent = 'Edit';
+}
+
+/* ── Recalculate ── */
+function recalculate() {
+    // Persist current profile data into sessionStorage so the input form is pre-filled
+    const data = {
+        marital:            profile.marital_status    || null,
+        citizenship:        profile.citizenship       || null,
+        partnerCitizenship: profile.partner_citizenship || null,
+        employmentStatus:   profile.employment_status || null,
+        income:             profile.income            || null,
+        flatType:           profile.flat_type         || '4-room',
+        purchaseType:       profile.purchase_type     || null,
+        budget:             profile.budget            || null,
+        loanType:           profile.loan_type         || 'hdb',
+        nearParents:        profile.near_parents != null ? (profile.near_parents ? 'yes' : 'no') : null,
+        parentsTown:        profile.parents_town      || null,
+        workplaceMRT:       profile.workplace_mrt     || null,
+        preferences:        profile.preferences       || []
+    };
+    sessionStorage.setItem('homematchData', JSON.stringify(data));
+    window.location.href = 'results.html';
+}
+
+/* ── Helpers ── */
+function showMsg(el, text, type) {
+    if (!el) return;
+    el.textContent = text;
+    el.className = 'field-msg ' + type;
+}
+
+/* ── Drag to reorder prefs ── */
+(function initDrag() {
+    const list = document.getElementById('prefList');
+    let dragged = null;
+    list.querySelectorAll('.pref-item').forEach(item => {
+        item.setAttribute('draggable', true);
+        item.addEventListener('dragstart', () => { dragged = item; });
+        item.addEventListener('dragover',  e => e.preventDefault());
+        item.addEventListener('dragenter', () => { if (dragged !== item) item.classList.add('drag-over'); });
+        item.addEventListener('dragleave', () => item.classList.remove('drag-over'));
+        item.addEventListener('drop', () => {
+            item.classList.remove('drag-over');
+            if (dragged && dragged !== item) {
+                const items = [...list.children];
+                if (items.indexOf(dragged) < items.indexOf(item)) item.after(dragged);
+                else item.before(dragged);
+                updatePrefRanks();
+                updatePrefMoveBtns();
+            }
+        });
+    });
+}());
+
+loadProfile();
+</script>
+</body>
+</html>
