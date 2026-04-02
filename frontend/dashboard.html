@@ -3,127 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard — HomeMatch</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <title>Personal Dashboard — HomeMatch</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body class="db-page">
+
 <div id="navbar-slot"></div>
 
-<div class="container" style="max-width:900px; padding-top:40px;">
+<!-- Hi banner -->
+<div class="db-banner">
+    <span class="db-banner-text" id="dbGreeting">Hi.</span>
+</div>
 
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:32px;">
-        <div>
-            <h1 style="margin:0; font-size:1.75rem;">My Dashboard</h1>
-            <p id="dashWelcome" style="margin:4px 0 0; color:var(--color-text-muted);">Loading…</p>
+<!-- Main layout -->
+<div class="db-layout">
+
+    <!-- Sidebar -->
+    <aside class="db-sidebar">
+        <div class="db-sidebar-title">Account Overview</div>
+        <nav class="db-nav">
+            <button class="db-nav-item active" data-section="login" onclick="switchSection('login')">
+                Login Details <span class="db-nav-arrow">›</span>
+            </button>
+            <button class="db-nav-item" data-section="personal" onclick="switchSection('personal')">
+                Personal Information <span class="db-nav-arrow">›</span>
+            </button>
+            <button class="db-nav-item" data-section="financial" onclick="switchSection('financial')">
+                Financial Information <span class="db-nav-arrow">›</span>
+            </button>
+            <button class="db-nav-item" data-section="preferences" onclick="switchSection('preferences')">
+                Preferences <span class="db-nav-arrow">›</span>
+            </button>
+            <button class="db-nav-item" data-section="saved" onclick="switchSection('saved')">
+                Saved Listings <span class="db-nav-arrow">›</span>
+            </button>
+        </nav>
+    </aside>
+
+    <!-- Content -->
+    <main class="db-content">
+
+        <div id="dbLoading" class="db-loading">
+            <div class="spinner"></div>
+            <p>Loading your profile…</p>
         </div>
-        <button class="start-btn" style="margin:0; padding:10px 22px; font-size:0.95rem;" onclick="window.location.href='input.html'">
-            + New Search
-        </button>
-    </div>
 
-    <!-- Profile card -->
-    <div class="form-container" style="margin-bottom:24px; padding:24px 28px;">
-        <h3 style="margin:0 0 16px; font-size:1rem; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.05em;">My Profile</h3>
-        <div id="profileInfo" style="display:grid; grid-template-columns:1fr 1fr; gap:12px 32px;">
-            <div><span style="color:var(--color-text-muted); font-size:.85rem;">Name</span><p id="pName" style="margin:2px 0; font-weight:500;">—</p></div>
-            <div><span style="color:var(--color-text-muted); font-size:.85rem;">Email</span><p id="pEmail" style="margin:2px 0; font-weight:500;">—</p></div>
-            <div><span style="color:var(--color-text-muted); font-size:.85rem;">Citizenship</span><p id="pCitizenship" style="margin:2px 0; font-weight:500;">—</p></div>
+        <!-- LOGIN DETAILS -->
+        <section class="db-section active" id="section-login">
+            <h2 class="db-section-title">My Details</h2>
+            <p class="db-section-sub">Feel free to edit any of your details below so your account is up to date.</p>
+            <h3 class="db-sub-heading">Login Details</h3>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Username</div>
+                <div class="db-field-value" id="f-name">—</div>
+                <button class="db-edit-btn" onclick="editField('name')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Email address</div>
+                <div class="db-field-value" id="f-email">—</div>
+                <button class="db-edit-btn" onclick="editField('email')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Password</div>
+                <div class="db-field-value">••••••••••</div>
+                <button class="db-edit-btn" onclick="editField('password')">Edit</button>
+            </div>
+
+            <div style="margin-top: 32px;">
+                <button class="db-logout-btn" onclick="handleLogout()">Log Out</button>
+            </div>
+        </section>
+
+        <!-- PERSONAL INFORMATION -->
+        <section class="db-section" id="section-personal">
+            <h2 class="db-section-title">My Details</h2>
+            <p class="db-section-sub">Feel free to edit any of your details below so your account is up to date.</p>
+            <h3 class="db-sub-heading">Personal Information</h3>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Citizenship Status</div>
+                <div class="db-field-value" id="f-citizenship">—</div>
+                <button class="db-edit-btn" onclick="editField('citizenship')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Marital Status</div>
+                <div class="db-field-value" id="f-marital">—</div>
+                <button class="db-edit-btn" onclick="editField('marital')">Edit</button>
+            </div>
+
+            <div class="db-field-group" id="fg-partnerCitizenship">
+                <div class="db-field-label">Spouse Citizenship Status</div>
+                <div class="db-field-value" id="f-partnerCitizenship">—</div>
+                <button class="db-edit-btn" onclick="editField('partnerCitizenship')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Employment Status</div>
+                <div class="db-field-value" id="f-employmentStatus">—</div>
+                <button class="db-edit-btn" onclick="editField('employmentStatus')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Average Household Income</div>
+                <div class="db-field-value" id="f-income">—</div>
+                <button class="db-edit-btn" onclick="editField('income')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Preferred Flat Type</div>
+                <div class="db-field-value" id="f-flatType">—</div>
+                <button class="db-edit-btn" onclick="editField('flatType')">Edit</button>
+            </div>
+        </section>
+
+        <!-- FINANCIAL INFORMATION -->
+        <section class="db-section" id="section-financial">
+            <h2 class="db-section-title">My Details</h2>
+            <p class="db-section-sub">Feel free to edit any of your details below so your account is up to date.</p>
+            <h3 class="db-sub-heading">Financial Information</h3>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Purchase Type</div>
+                <div class="db-field-value" id="f-purchaseType">—</div>
+                <button class="db-edit-btn" onclick="editField('purchaseType')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Housing Budget / Maximum Price</div>
+                <div class="db-field-value" id="f-budget">—</div>
+                <button class="db-edit-btn" onclick="editField('budget')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Loan Type</div>
+                <div class="db-field-value" id="f-loanType">—</div>
+                <button class="db-edit-btn" onclick="editField('loanType')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Do you want to live near your parents?</div>
+                <div class="db-field-value" id="f-nearParents">—</div>
+                <button class="db-edit-btn" onclick="editField('nearParents')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Parent's Location (MRT)</div>
+                <div class="db-field-value" id="f-parentsLocation">—</div>
+                <button class="db-edit-btn" onclick="editField('parentsLocation')">Edit</button>
+            </div>
+
+            <div class="db-field-group">
+                <div class="db-field-label">Workplace Location (MRT)</div>
+                <div class="db-field-value" id="f-workplaceLocation">—</div>
+                <button class="db-edit-btn" onclick="editField('workplaceLocation')">Edit</button>
+            </div>
+
+            <div class="db-recalculate-box">
+                <h3 class="db-sub-heading" style="margin:0 0 6px;">Recalculate</h3>
+                <p style="margin:0 0 14px; font-size:13px; color:var(--color-text-muted);">Recalculate your estimated financial plan</p>
+                <button class="db-recalc-btn" onclick="window.location.href='input.html'">Recalculate</button>
+            </div>
+        </section>
+
+        <!-- PREFERENCES -->
+        <section class="db-section" id="section-preferences">
+            <h2 class="db-section-title">My Details</h2>
+            <p class="db-section-sub">Feel free to edit any of your details below so your account is up to date.</p>
+            <h3 class="db-sub-heading">Preferences</h3>
+
+            <div class="db-pref-list" id="dbPrefList">
+                <div class="db-pref-empty">No preferences saved yet.</div>
+            </div>
+
+            <button class="db-edit-btn" style="margin-top:20px;" onclick="window.location.href='input.html'">Edit</button>
+        </section>
+
+        <!-- SAVED LISTINGS -->
+        <section class="db-section" id="section-saved">
+            <h2 class="db-section-title">Saved Listings</h2>
+            <p class="db-section-sub">Listings you've bookmarked from your search results.</p>
+
+            <div id="dbSavedListings" class="db-saved-grid">
+                <div class="db-pref-empty">Loading saved listings…</div>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Inline edit modal -->
+<div class="db-edit-overlay" id="dbEditOverlay" onclick="closeEditModal(event)">
+    <div class="db-edit-modal">
+        <div class="db-edit-modal-title" id="dbEditTitle">Edit</div>
+        <div id="dbEditBody"></div>
+        <div class="db-edit-actions">
+            <button class="db-edit-cancel" onclick="closeEditModalBtn()">Cancel</button>
+            <button class="db-edit-save" onclick="saveEditField()">Save</button>
         </div>
     </div>
-
-    <!-- Saved searches -->
-    <div class="form-container" style="padding:24px 28px;">
-        <h3 style="margin:0 0 16px; font-size:1rem; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.05em;">Saved Searches</h3>
-        <div id="savedSearches">
-            <p style="color:var(--color-text-muted);">Loading saved searches…</p>
-        </div>
-    </div>
-
 </div>
 
 <script src="js/app.js"></script>
-<script>
-(async function initDashboard() {
-    const token = localStorage.getItem('hm_token');
-    if (!token) { window.location.href = 'index.html'; return; }
+<script src="js/hdb.js"></script>
+<script src="js/dashboard.js"></script>
 
-    const API = window.HM_API || 'http://localhost:3001';
-
-    // Load profile
-    try {
-        const r = await fetch(`${API}/api/auth/me`, { headers: { Authorization: `Bearer ${token}` } });
-        if (!r.ok) { localStorage.removeItem('hm_token'); window.location.href = 'index.html'; return; }
-        const u = await r.json();
-        document.getElementById('dashWelcome').textContent = `Welcome back${u.name ? ', ' + u.name : ''}!`;
-        document.getElementById('pName').textContent        = u.name || '—';
-        document.getElementById('pEmail').textContent       = u.email;
-        document.getElementById('pCitizenship').textContent = u.citizenship === 'sc' ? 'Singapore Citizen' : u.citizenship === 'pr' ? 'Permanent Resident' : '—';
-    } catch {
-        document.getElementById('dashWelcome').textContent = 'Could not load profile.';
-    }
-
-    // Load saved searches
-    try {
-        const r = await fetch(`${API}/api/auth/saved-searches`, { headers: { Authorization: `Bearer ${token}` } });
-        const searches = await r.json();
-        const container = document.getElementById('savedSearches');
-
-        if (!searches.length) {
-            container.innerHTML = '<p style="color:var(--color-text-muted);">No saved searches yet. Run a search and save your results!</p>';
-            return;
-        }
-
-        container.innerHTML = searches.map(s => {
-            const d  = new Date(s.created_at);
-            const fd = s.form_data || {};
-            const label = s.name || `Search on ${d.toLocaleDateString('en-SG')}`;
-            const encoded = JSON.stringify(fd).replace(/"/g, '&quot;');
-            return `
-            <div class="result-card" data-id="${s.id}" data-form-data="${encoded}" style="margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                    <div>
-                        <strong>${label}</strong>
-                        <p style="margin:4px 0 0; font-size:.85rem; color:var(--color-text-muted);">
-                            ${fd.flatType || '—'} · ${fd.purchaseType || '—'} ·
-                            Income $${Number(fd.income || 0).toLocaleString()}/mo
-                        </p>
-                    </div>
-                    <div style="display:flex; gap:8px;">
-                        <button onclick="loadSearch(${s.id})" style="font-size:.8rem; padding:6px 14px;" class="start-btn">View</button>
-                        <button onclick="deleteSearch(${s.id}, this)" style="font-size:.8rem; padding:6px 14px; background:var(--color-red);" class="start-btn">Delete</button>
-                    </div>
-                </div>
-            </div>`;
-        }).join('');
-    } catch {
-        document.getElementById('savedSearches').innerHTML = '<p style="color:var(--color-red);">Could not load saved searches.</p>';
-    }
-})();
-
-function loadSearch(id) {
-    // Find the search in the already-rendered list by scanning cards
-    // The form_data is embedded as a data attribute on the card
-    const card = document.querySelector(`.result-card[data-id="${id}"]`);
-    if (card && card.dataset.formData) {
-        sessionStorage.setItem('homematchData', card.dataset.formData);
-        window.location.href = 'results.html';
-    }
-}
-
-async function deleteSearch(id, btn) {
-    const token = localStorage.getItem('hm_token');
-    const API   = window.HM_API || 'http://localhost:3001';
-    btn.disabled = true;
-    btn.textContent = '…';
-    try {
-        await fetch(`${API}/api/auth/saved-searches/${id}`, { method: 'DELETE', headers: { Authorization: `Bearer ${token}` } });
-        btn.closest('.result-card').remove();
-    } catch {
-        btn.disabled = false;
-        btn.textContent = 'Delete';
-    }
-}
-</script>
 </body>
 </html>

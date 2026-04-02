@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HomeMatch Results</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 </head>
@@ -38,7 +38,7 @@
     <!-- RESULTS CONTENT -->
     <div id="resultsContent" style="display: none;">
 
-        <!-- Grant Banner (populated by JS) -->
+        <!-- Grant Banner -->
         <div id="grantBanner" class="grant-banner" style="display: none;">
             <div class="grant-banner-icon">💰</div>
             <div>
@@ -47,9 +47,8 @@
             </div>
         </div>
 
-        <!-- Filter Panel -->
+        <!-- Filter / Sort Bar -->
         <div class="filter-panel">
-
             <div class="filter-group">
                 <label>Sort By</label>
                 <select id="sortResults">
@@ -58,7 +57,6 @@
                     <option value="distance">Closest MRT</option>
                 </select>
             </div>
-
             <div class="filter-group">
                 <label>Flat Type</label>
                 <select id="filterFlatType">
@@ -69,7 +67,6 @@
                     <option value="5-room">5-room</option>
                 </select>
             </div>
-
             <div class="filter-group filter-price-group">
                 <label>Max Price (after grants)</label>
                 <div class="filter-price-row">
@@ -77,20 +74,19 @@
                     <span class="filter-price-val" id="filterPriceDisplay">Any</span>
                 </div>
             </div>
-
             <div class="filter-count" id="filterCount"></div>
-
         </div>
 
-
-        <!-- Results Layout -->
+        <!-- Results Layout: grid + map -->
         <div class="results-layout">
-            <div class="results-list" id="resultsList"></div>
-            <div id="map"></div>
+            <div class="results-grid" id="resultsGrid"></div>
+            <div class="results-map-col">
+                <div class="map-label">📍 Location Map</div>
+                <div id="map"></div>
+            </div>
         </div>
 
-
-        <!-- Footer: Data Source + Disclaimer -->
+        <!-- Footer -->
         <div class="results-footer">
             <p class="data-source">
                 📊 Resale prices based on HDB transaction data (Q1 2025) · BTO prices are estimates from recent launches
@@ -104,6 +100,64 @@
 
     </div>
 
+</div>
+
+<!-- Detail Modal -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail(event)">
+    <div class="detail-modal" id="detailModal">
+
+        <button class="detail-close" onclick="closeDetailBtn()">✕</button>
+
+        <div class="detail-body">
+
+            <!-- Left: map -->
+            <div class="detail-map-col">
+                <div id="detailMap"></div>
+                <div class="detail-map-label" id="detailMrt"></div>
+            </div>
+
+            <!-- Right: info -->
+            <div class="detail-info-col">
+
+                <div class="detail-badges" id="detailBadges"></div>
+                <h2 class="detail-town" id="detailTown"></h2>
+                <div class="detail-region" id="detailRegion"></div>
+
+                <!-- Match score bar -->
+                <div class="detail-score-row">
+                    <span class="detail-score-label">Match Score</span>
+                    <div class="detail-bar-track">
+                        <div class="detail-bar-fill" id="detailBarFill"></div>
+                    </div>
+                    <span class="detail-score-pct" id="detailScorePct"></span>
+                </div>
+
+                <!-- Price breakdown -->
+                <div class="detail-section-label">Price by Flat Type</div>
+                <div class="detail-price-grid" id="detailPriceGrid"></div>
+
+                <!-- Grants -->
+                <div id="detailGrantRow" class="detail-grant-row" style="display:none;">
+                    <span class="detail-grant-icon">💰</span>
+                    <span id="detailGrantText"></span>
+                </div>
+
+                <!-- Trend -->
+                <div class="detail-trend-row" id="detailTrendRow"></div>
+
+                <!-- Action buttons -->
+                <div class="detail-actions">
+                    <button class="detail-save-btn" id="detailSaveBtn" onclick="toggleSaveFromModal()">
+                        🔖 Save
+                    </button>
+                    <button class="detail-compare-btn" id="detailCompareBtn" onclick="toggleCompareFromModal()">
+                        + Compare
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Floating Compare Bar -->
