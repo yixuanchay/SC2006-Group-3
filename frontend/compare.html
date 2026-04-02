@@ -3,183 +3,268 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compare Houses — HomeMatch</title>
+    <title>Compare Locations — HomeMatch</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <style>
         body { background: #f5f4f2; }
 
-        .compare-page-label {
-            font-size: 0.78rem;
-            color: #b0a99f;
-            padding: 10px 0 0 48px;
+        /* ── Page header ── */
+        .cmp-header {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 40px 0;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .cmp-back-btn {
+            background: none;
+            border: 1px solid #d6cfc8;
+            border-radius: 20px;
+            padding: 8px 18px;
+            font-size: 0.85rem;
+            color: #7a6e66;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s;
+        }
+        .cmp-back-btn:hover { background: #ede8e3; }
+        .cmp-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin: 0;
+        }
+        .cmp-subtitle {
+            font-size: 0.85rem;
+            color: #a09891;
+            margin: 0;
+        }
+
+        /* ── Empty / error state ── */
+        .cmp-empty {
+            max-width: 500px;
+            margin: 80px auto;
+            text-align: center;
+            color: #7a6e66;
+        }
+        .cmp-empty h2 { font-size: 1.3rem; margin-bottom: 10px; color: #3a3530; }
+        .cmp-empty p  { font-size: 0.9rem; margin-bottom: 24px; }
+        .cmp-go-back  {
+            display: inline-block;
+            padding: 12px 28px;
+            background: #b39e8f;
+            color: #fff;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+        .cmp-go-back:hover { background: #9a8578; }
+
+        /* ── Comparison table ── */
+        .cmp-container {
+            max-width: 1200px;
+            margin: 28px auto 60px;
+            padding: 0 40px;
+            overflow-x: auto;
+        }
+
+        .cmp-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+        }
+
+        /* Column header row (image + name) */
+        .cmp-table thead tr th {
+            vertical-align: top;
+            padding: 0;
+            border-bottom: 1px solid #ece8e3;
+        }
+        .cmp-table thead tr th:first-child {
+            width: 200px;
+            min-width: 160px;
+        }
+
+        .cmp-col-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px 20px 20px;
+            gap: 12px;
+            position: relative;
+        }
+        .cmp-col-header.best-match {
+            background: linear-gradient(180deg, #fdf8f4 0%, #fff 100%);
+        }
+        .cmp-best-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #22c55e;
+            color: #fff;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
             letter-spacing: 0.03em;
         }
 
-        .compare-container {
-            max-width: 1100px;
-            margin: 24px auto 60px;
-            padding: 0 48px;
-        }
-
-        /* ── Featured BTO card ── */
-        .featured-card {
-            background: #fff;
-            border-radius: 12px;
-            border: 1px solid #ece8e3;
-            display: flex;
-            overflow: hidden;
-            margin-bottom: 40px;
-            min-height: 380px;
-        }
-
-        .featured-image {
-            width: 52%;
-            flex-shrink: 0;
-            background: #e8e4df;
-            overflow: hidden;
-        }
-
-        .featured-image img {
-            width: 100%;
-            height: 100%;
+        .cmp-col-img {
+            width: 120px;
+            height: 90px;
             object-fit: cover;
-            display: block;
+            border-radius: 10px;
+            background: #e8e4df;
+        }
+        .cmp-col-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-align: center;
+        }
+        .cmp-col-region {
+            font-size: 0.78rem;
+            color: #a09891;
+            background: #f0ebe5;
+            padding: 3px 10px;
+            border-radius: 20px;
+        }
+        .cmp-col-score {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #22c55e;
+        }
+        .cmp-col-score.amber { color: #f59e0b; }
+        .cmp-col-score.red   { color: #ef4444; }
+
+        .cmp-score-bar-track {
+            width: 100%;
+            height: 5px;
+            background: #f0ebe5;
+            border-radius: 3px;
+            margin-top: 2px;
+        }
+        .cmp-score-bar-fill {
+            height: 5px;
+            border-radius: 3px;
+            background: #22c55e;
         }
 
-        .featured-info {
-            flex: 1;
-            padding: 36px 40px;
+        /* Row category label */
+        .cmp-row-label {
+            padding: 14px 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: #7a6e66;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            background: #faf8f6;
+            border-bottom: 1px solid #f0ebe5;
+            border-right: 1px solid #f0ebe5;
+        }
+        .cmp-row-label:first-child {
+            border-radius: 0;
+        }
+
+        /* Data cell */
+        .cmp-table tbody tr td {
+            padding: 14px 20px;
+            font-size: 0.88rem;
+            color: #3a3530;
+            border-bottom: 1px solid #f5f3f1;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .cmp-table tbody tr td:first-child {
+            text-align: left;
+        }
+        .cmp-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Section separator rows */
+        .cmp-section-row td {
+            background: #f5f3f1 !important;
+            font-weight: 700 !important;
+            font-size: 0.8rem !important;
+            color: #5a4a3c !important;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            padding: 10px 20px !important;
+            border-bottom: 1px solid #ece8e3 !important;
+        }
+
+        /* Special cell styles */
+        .cmp-price { font-weight: 600; color: #1a1a1a; font-size: 0.95rem; }
+        .cmp-mrt   { color: #5a8fd4; }
+        .cmp-trend-up   { color: #22c55e; font-weight: 600; }
+        .cmp-trend-down { color: #ef4444; font-weight: 600; }
+        .cmp-highlight  { background: #fdf8f4; }
+
+        .cmp-flat-grid {
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            gap: 4px;
+            align-items: center;
         }
-
-        .featured-info h2 {
-            font-size: 1.7rem;
-            font-weight: 700;
-            color: #1a1a1a;
-            margin: 0 0 24px;
+        .cmp-flat-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 180px;
+            font-size: 0.82rem;
         }
+        .cmp-flat-type  { color: #7a6e66; }
+        .cmp-flat-price { font-weight: 600; color: #1a1a1a; }
 
-        .info-block { margin-bottom: 18px; }
-
-        .info-label {
-            font-weight: 700;
-            font-size: 0.9rem;
-            color: #1a1a1a;
-            margin-bottom: 4px;
+        /* Action row */
+        .cmp-action-cell {
+            padding: 20px !important;
         }
-
-        .info-value {
-            font-size: 0.88rem;
-            color: #444;
-            line-height: 1.7;
-        }
-
-        .save-btn {
+        .cmp-save-btn {
             display: block;
             width: 100%;
-            padding: 14px;
+            max-width: 160px;
+            margin: 0 auto;
+            padding: 10px 0;
             background: #b39e8f;
             color: #fff;
             border: none;
             border-radius: 8px;
-            font-size: 1rem;
+            font-size: 0.85rem;
             font-weight: 500;
             cursor: pointer;
-            margin-top: 28px;
+            font-family: inherit;
             transition: background 0.15s;
         }
-        .save-btn:hover { background: #9a8578; }
-        .save-btn.saved { background: #6b7280; }
+        .cmp-save-btn:hover  { background: #9a8578; }
+        .cmp-save-btn.saved  { background: #6b7280; }
 
-        /* ── BTO grid ── */
-        .bto-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 24px;
-        }
-
-        @media (max-width: 800px) {
-            .bto-grid { grid-template-columns: 1fr 1fr; }
-            .featured-card { flex-direction: column; }
-            .featured-image { width: 100%; height: 220px; }
-            .compare-container { padding: 0 20px; }
-        }
-
-        .bto-card {
-            background: #fff;
-            border-radius: 10px;
-            border: 1px solid #ece8e3;
-            overflow: hidden;
-            cursor: pointer;
-            transition: box-shadow 0.15s, border-color 0.15s;
-        }
-        .bto-card:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            border-color: #c9b9aa;
-        }
-        .bto-card.active {
-            border-color: #b39e8f;
-            box-shadow: 0 4px 16px rgba(179,158,143,0.25);
-        }
-
-        .bto-card-img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            display: block;
-            background: #e8e4df;
-        }
-
-        .bto-card-img-placeholder {
-            width: 100%;
-            height: 180px;
-            background: #ddd8d2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #aaa;
+        /* Footer note */
+        .cmp-footer {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 40px;
             font-size: 0.8rem;
+            color: #a09891;
+            line-height: 1.6;
         }
 
-        .bto-card-body { padding: 16px 18px 18px; }
-
-        .bto-card-body h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin: 0 0 6px;
-        }
-
-        .card-label {
-            font-size: 0.8rem;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 2px;
-        }
-
-        .card-types {
-            font-size: 0.8rem;
-            color: #666;
-        }
-
-        .coming-soon-banner {
-            background: #f0ebe5;
-            border: 1px dashed #c9b9aa;
-            border-radius: 10px;
-            padding: 20px 24px;
-            text-align: center;
-            color: #8a7a6c;
-            font-size: 0.85rem;
-            margin-top: 32px;
-        }
-        .coming-soon-banner strong {
-            display: block;
-            font-size: 0.95rem;
-            color: #5a4a3c;
-            margin-bottom: 4px;
+        @media (max-width: 700px) {
+            .cmp-container { padding: 0 12px; }
+            .cmp-header    { padding: 20px 16px 0; }
+            .cmp-footer    { padding: 0 16px; }
+            .cmp-col-img   { width: 80px; height: 60px; }
+            .cmp-table thead tr th:first-child { width: 120px; min-width: 100px; }
         }
     </style>
 </head>
@@ -187,130 +272,201 @@
 
 <div id="navbar-slot"></div>
 
-<p class="compare-page-label">BTO Compare</p>
-
-<div class="compare-container">
-
-    <!-- Featured BTO -->
-    <div class="featured-card" id="featuredCard">
-        <div class="featured-image">
-            <img id="featuredImg" src="images/hdb-screenshot.png" alt="BTO Site Plan"
-                 onerror="this.style.display='none'">
-        </div>
-        <div class="featured-info">
-            <h2 id="featuredName">Sembawang BTO</h2>
-            <div class="info-block">
-                <div class="info-label">Flat Types</div>
-                <div class="info-value" id="featuredTypes">2-room<br>Flexi 3-room<br>4-room<br>5-room</div>
-            </div>
-            <div class="info-block">
-                <div class="info-label">Price Range</div>
-                <div class="info-value" id="featuredPrice">SGD 155,000 to SGD 515,000</div>
-            </div>
-            <button class="save-btn" id="featuredSaveBtn" onclick="toggleSave()">Save</button>
-        </div>
+<!-- Page header -->
+<div class="cmp-header">
+    <button class="cmp-back-btn" onclick="window.location.href='results.html'">← Back to Results</button>
+    <div>
+        <h1>Side-by-Side Comparison</h1>
+        <p class="cmp-subtitle" id="cmpSubtitle"></p>
     </div>
+</div>
 
-    <!-- BTO Grid -->
-    <div class="bto-grid" id="btoGrid"></div>
+<!-- Empty state (shown if no compare data) -->
+<div class="cmp-empty" id="cmpEmpty" style="display:none;">
+    <h2>Nothing to compare</h2>
+    <p>Go back to results, click "+ Compare" on at least 2 locations, then tap the Compare button.</p>
+    <button class="cmp-go-back" onclick="window.location.href='results.html'">← Back to Results</button>
+</div>
 
-    <!-- Coming soon note -->
-    <div class="coming-soon-banner">
-        <strong>Live HDB data coming soon</strong>
-        BTO listings will be automatically updated from HDB's API when new launches are released.
-    </div>
+<!-- Comparison table -->
+<div class="cmp-container" id="cmpContainer" style="display:none;">
+    <table class="cmp-table" id="cmpTable"></table>
+</div>
 
+<div class="cmp-footer" id="cmpFooter" style="display:none;">
+    <p>📊 Resale prices based on HDB transaction data (Q1 2025) · BTO prices are estimates (approx. 55% of resale). Grant deductions applied where applicable.</p>
+    <p>⚠️ These are indicative estimates only. Verify all figures with HDB at <strong>hdb.gov.sg</strong> before making any financial decisions.</p>
 </div>
 
 <script src="js/app.js"></script>
+<script src="js/hdb.js"></script>
 <script>
-const BTO_DATA = [
-    {
-        id: 'woodlands',
-        name: 'Woodlands BTO',
-        flatTypes: ['2-room', 'Flexi 3-room', '4-room', '5-room'],
-        priceRange: 'SGD 130,000 to SGD 480,000',
-        image: 'images/hdb-building.png',
-        sitePlan: 'images/hdb-screenshot.png'
-    },
-    {
-        id: 'bukit-merah',
-        name: 'Bukit Merah BTO',
-        flatTypes: ['2-room Flexi', '3-room', '4-room'],
-        priceRange: 'SGD 195,000 to SGD 620,000',
-        image: 'images/hdb-building.png',
-        sitePlan: 'images/hdb-screenshot.png'
-    },
-    {
-        id: 'ang-mo-kio',
-        name: 'Ang Mo Kio BTO',
-        flatTypes: ['3-room', '4-room'],
-        priceRange: 'SGD 210,000 to SGD 550,000',
-        image: 'images/hdb-building.png',
-        sitePlan: 'images/hdb-screenshot.png'
-    },
-    {
-        id: 'sembawang',
-        name: 'Sembawang BTO',
-        flatTypes: ['2-room', 'Flexi 3-room', '4-room', '5-room', '3Gen'],
-        priceRange: 'SGD 155,000 to SGD 515,000',
-        image: 'images/hdb-building.png',
-        sitePlan: 'images/hdb-screenshot.png'
-    }
-];
+/* ─── helpers ─── */
+function fmt(n) { return '$' + Number(n).toLocaleString('en-SG'); }
+function scoreColor(s) { return s >= 85 ? '#22c55e' : s >= 70 ? '#f59e0b' : '#ef4444'; }
+function scoreClass(s) { return s >= 85 ? '' : s >= 70 ? 'amber' : 'red'; }
 
-let currentId = 'sembawang';
-let savedSet  = new Set(JSON.parse(localStorage.getItem('hm_saved_bto') || '[]'));
+const BTO_FACTOR = 0.55;
 
-function renderGrid() {
-    document.getElementById('btoGrid').innerHTML = BTO_DATA.map(bto => `
-        <div class="bto-card ${bto.id === currentId ? 'active' : ''}"
-             id="card-${bto.id}" onclick="selectBTO('${bto.id}')">
-            <img class="bto-card-img" src="${bto.image}" alt="${bto.name}"
-                 onerror="this.outerHTML='<div class=\'bto-card-img-placeholder\'>No image</div>'">
-            <div class="bto-card-body">
-                <h3>${bto.name}</h3>
-                <div class="card-label">Available Flat Types:</div>
-                <div class="card-types">${bto.flatTypes.join(', ')}</div>
-            </div>
-        </div>
-    `).join('');
-}
+/* ─── savedSet ─── */
+let savedSet = new Set(JSON.parse(localStorage.getItem('hm_saved_towns') || '[]'));
 
-function selectBTO(id) {
-    const bto = BTO_DATA.find(b => b.id === id);
-    if (!bto) return;
-    currentId = id;
-
-    document.getElementById('featuredName').textContent  = bto.name;
-    document.getElementById('featuredPrice').textContent = bto.priceRange;
-    document.getElementById('featuredTypes').innerHTML   = bto.flatTypes.join('<br>');
-
-    const img = document.getElementById('featuredImg');
-    img.style.display = 'block';
-    img.src = bto.sitePlan;
-
-    const btn = document.getElementById('featuredSaveBtn');
-    btn.textContent = savedSet.has(id) ? 'Saved ✓' : 'Save';
-    btn.classList.toggle('saved', savedSet.has(id));
-
-    renderGrid();
-}
-
-function toggleSave() {
-    if (savedSet.has(currentId)) {
-        savedSet.delete(currentId);
+function toggleSave(town, btn) {
+    if (savedSet.has(town)) {
+        savedSet.delete(town);
+        btn.textContent = '🔖 Save';
+        btn.classList.remove('saved');
     } else {
-        savedSet.add(currentId);
+        savedSet.add(town);
+        btn.textContent = '🔖 Saved ✓';
+        btn.classList.add('saved');
     }
-    localStorage.setItem('hm_saved_bto', JSON.stringify([...savedSet]));
-    const btn = document.getElementById('featuredSaveBtn');
-    btn.textContent = savedSet.has(currentId) ? 'Saved ✓' : 'Save';
-    btn.classList.toggle('saved', savedSet.has(currentId));
+    localStorage.setItem('hm_saved_towns', JSON.stringify([...savedSet]));
 }
 
-renderGrid();
-selectBTO('sembawang');
+/* ─── main render ─── */
+function buildComparison() {
+    const raw = sessionStorage.getItem('hm_compare');
+    if (!raw) { showEmpty(); return; }
+
+    let payload;
+    try { payload = JSON.parse(raw); } catch { showEmpty(); return; }
+
+    const items    = payload.items || [];
+    const formData = payload.formData || {};
+    if (items.length < 2) { showEmpty(); return; }
+
+    const purchaseType = formData.purchaseType || 'resale';
+    const flatType     = formData.flatType     || '4-room';
+    const isBTO        = purchaseType === 'bto';
+    const grantTotal   = (typeof calculateGrants === 'function')
+                           ? calculateGrants(formData).total
+                           : 0;
+
+    document.getElementById('cmpSubtitle').textContent =
+        `Comparing ${items.length} locations · ${isBTO ? 'BTO' : 'Resale'} · ${flatType}`;
+
+    const N = items.length;
+
+    /* ─ helper: build a <tr> ─ */
+    function row(labelHTML, cells, extraClass = '') {
+        const tds = cells.map((c, i) =>
+            `<td class="${extraClass} ${i === 0 ? 'cmp-highlight' : ''}">${c}</td>`
+        ).join('');
+        return `<tr><td class="cmp-row-label">${labelHTML}</td>${tds}</tr>`;
+    }
+
+    function sectionRow(label) {
+        return `<tr class="cmp-section-row"><td colspan="${N + 1}">${label}</td></tr>`;
+    }
+
+    /* ─ column headers ─ */
+    const bestScore = Math.max(...items.map(r => r.score));
+
+    let headRow = `<tr><th></th>`;
+    items.forEach((r, i) => {
+        const isBest = r.score === bestScore && i === 0;
+        const sc = scoreColor(r.score);
+        const cl = scoreClass(r.score);
+        headRow += `
+            <th>
+                <div class="cmp-col-header ${isBest ? 'best-match' : ''}">
+                    ${isBest ? '<span class="cmp-best-badge">★ Best Match</span>' : ''}
+                    <img class="cmp-col-img" src="${r.image || 'images/hdb-building.png'}"
+                         alt="${r.town}"
+                         onerror="this.src=''; this.parentElement.style.background='#e8e4df'">
+                    <div class="cmp-col-name">${r.town}</div>
+                    <div class="cmp-col-region">${r.region || ''}</div>
+                    <div class="cmp-col-score ${cl}" style="color:${sc};">${r.score}%</div>
+                    <div class="cmp-score-bar-track">
+                        <div class="cmp-score-bar-fill" style="width:${r.score}%;background:${sc};"></div>
+                    </div>
+                </div>
+            </th>`;
+    });
+    headRow += `</tr>`;
+
+    /* ─ price for preferred flat type ─ */
+    function basePrice(r) {
+        const p = r.prices?.[flatType] ?? r.prices?.['4-room'] ?? Object.values(r.prices || {})[0] ?? 0;
+        return isBTO ? Math.round(p * BTO_FACTOR) : p;
+    }
+
+    /* ─ rows ─ */
+    const rows = [];
+
+    // Overview section
+    rows.push(sectionRow('Overview'));
+    rows.push(row('Region',    items.map(r => r.region || '—')));
+    rows.push(row('Match Score', items.map(r => {
+        const sc = scoreColor(r.score); const cl = scoreClass(r.score);
+        return `<span class="cmp-col-score ${cl}" style="color:${sc};font-size:1rem;">${r.score}%</span>`;
+    })));
+
+    // Price section
+    rows.push(sectionRow('Pricing'));
+    rows.push(row(`${flatType} (${isBTO ? 'BTO est.' : 'Resale'})`,
+        items.map(r => `<span class="cmp-price">${fmt(basePrice(r))}</span>`)));
+
+    if (grantTotal > 0) {
+        rows.push(row('After Grants',
+            items.map(r => {
+                const eff = Math.max(0, basePrice(r) - grantTotal);
+                return `<span class="cmp-price" style="color:#22c55e;">${fmt(eff)}</span>`;
+            })));
+    }
+
+    rows.push(row('All Flat Types', items.map(r => {
+        if (!r.prices) return '—';
+        const lines = Object.entries(r.prices).map(([type, p]) => {
+            const chipPrice = isBTO ? Math.round(p * BTO_FACTOR) : p;
+            return `<div class="cmp-flat-row">
+                        <span class="cmp-flat-type">${type}</span>
+                        <span class="cmp-flat-price">${fmt(chipPrice)}</span>
+                    </div>`;
+        }).join('');
+        return `<div class="cmp-flat-grid">${lines}</div>`;
+    })));
+
+    rows.push(row('Price Trend (1yr)',
+        items.map(r => {
+            const t = r.trend ?? 0;
+            const cl = t >= 0 ? 'cmp-trend-up' : 'cmp-trend-down';
+            return `<span class="${cl}">${t >= 0 ? '↑ +' : '↓ '}${Math.abs(t)}%</span>`;
+        })));
+
+    // Transport section
+    rows.push(sectionRow('Transport'));
+    rows.push(row('Nearest MRT',   items.map(r => `<span class="cmp-mrt">🚆 ${r.mrt || '—'}</span>`)));
+    rows.push(row('Walk to MRT',   items.map(r => r.distance ? `${r.distance} min` : '—')));
+
+    // Action row
+    rows.push(sectionRow(''));
+    const actionCells = items.map((r, i) => {
+        const isSaved = savedSet.has(r.town);
+        return `<button class="cmp-save-btn ${isSaved ? 'saved' : ''}"
+                        id="saveBtn-${i}"
+                        onclick="toggleSave('${r.town}', this)">
+                    ${isSaved ? '🔖 Saved ✓' : '🔖 Save'}
+                </button>`;
+    });
+    rows.push(`<tr><td class="cmp-row-label"></td>${actionCells.map(c => `<td class="cmp-action-cell">${c}</td>`).join('')}</tr>`);
+
+    /* ─ assemble table ─ */
+    document.getElementById('cmpTable').innerHTML = `
+        <thead>${headRow}</thead>
+        <tbody>${rows.join('')}</tbody>
+    `;
+
+    document.getElementById('cmpContainer').style.display = 'block';
+    document.getElementById('cmpFooter').style.display    = 'block';
+}
+
+function showEmpty() {
+    document.getElementById('cmpEmpty').style.display = 'block';
+}
+
+buildComparison();
 </script>
 
 </body>
