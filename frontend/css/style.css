@@ -2889,3 +2889,107 @@ body.db-page {
 }
 
 .db-edit-save:hover { background: #9a8578; }
+
+/* ================================================================
+   Compare Bar (floating, results page)
+   ================================================================ */
+
+.compare-bar {
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: #3a2e28;
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 50px;
+    box-shadow: 0 8px 32px rgba(58,46,40,0.35);
+    transition: bottom 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    white-space: nowrap;
+    max-width: calc(100vw - 48px);
+}
+
+.compare-bar.visible {
+    bottom: 28px;
+}
+
+.compare-bar-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.compare-bar-towns {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: nowrap;
+}
+
+.compare-bar-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.22);
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 500;
+    padding: 5px 10px 5px 12px;
+    border-radius: 20px;
+    white-space: nowrap;
+}
+
+.compare-bar-pill-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.18);
+    border: none;
+    color: rgba(255,255,255,0.75);
+    font-size: 0.7rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+    transition: background 0.15s;
+}
+.compare-bar-pill-remove:hover {
+    background: rgba(255,255,255,0.35);
+    color: #fff;
+}
+
+.compare-bar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.compare-bar-btn {
+    padding: 10px 22px;
+    background: #b39e8f;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 0.15s, opacity 0.15s;
+    white-space: nowrap;
+}
+.compare-bar-btn:hover:not(:disabled) {
+    background: #c4ae9f;
+}
+.compare-bar-btn:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
